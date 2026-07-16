@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="view-transition" content="same-origin">
+<meta name="description" content="Lamzu concept lineup — mice, mousepads and keyboards, filterable by category.">
+<meta name="theme-color" content="#060911">
+<title>Shop — Lamzu</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233e8eff'/%3E%3Crect x='11' y='7' width='10' height='18' rx='5' fill='%23eaf1ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/shop.css">
+<script>
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('lamzu-theme'); } catch (e) {}
+  var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.documentElement.dataset.theme = theme;
+})();
+</script>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<div class="noise"></div>
+<div class="glow glow-a"></div>
+<div class="glow glow-b"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="grad-glacier" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8FD6FF"/>
+      <stop offset="1" stop-color="#0B3D91"/>
+    </linearGradient>
+    <linearGradient id="grad-arctic" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EAF1FF"/>
+      <stop offset="1" stop-color="#7C93B8"/>
+    </linearGradient>
+    <linearGradient id="grad-midnight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4A4F5C"/>
+      <stop offset="1" stop-color="#0A0B0F"/>
+    </linearGradient>
+    <linearGradient id="grad-cyan" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6FE3FF"/>
+      <stop offset="1" stop-color="#1B5FCC"/>
+    </linearGradient>
+
+    <symbol id="icon-mouse-ergo" viewBox="0 0 200 280">
+      <path d="M100 10 C142 10 172 36 178 90 C182 130 181 190 172 224 C164 252 140 270 100 270 C60 270 36 252 28 224 C19 190 18 130 22 90 C28 36 58 10 100 10 Z"/>
+      <rect x="88" y="34" width="24" height="52" rx="12" fill="rgba(6,9,17,0.28)"/>
+      <line x1="100" y1="90" x2="100" y2="150" stroke="rgba(6,9,17,0.22)" stroke-width="2"/>
+    </symbol>
+
+    <symbol id="icon-mouse-sym" viewBox="0 0 200 280">
+      <path d="M100 20 C150 20 176 56 176 112 C176 162 158 208 130 232 C120 241 100 246 100 246 C100 246 80 241 70 232 C42 208 24 162 24 112 C24 56 50 20 100 20 Z"/>
+      <rect x="88" y="42" width="24" height="48" rx="12" fill="rgba(6,9,17,0.28)"/>
+      <line x1="100" y1="96" x2="100" y2="150" stroke="rgba(6,9,17,0.22)" stroke-width="2"/>
+    </symbol>
+
+    <symbol id="icon-pad" viewBox="0 0 280 180">
+      <rect x="8" y="8" width="264" height="164" rx="16"/>
+      <rect x="20" y="20" width="240" height="140" rx="9" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" stroke-dasharray="2 6"/>
+    </symbol>
+
+    <symbol id="icon-keyboard" viewBox="0 0 320 130">
+      <rect x="6" y="6" width="308" height="118" rx="14"/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"></span>LAMZU
+    </a>
+    <ul class="nav-links">
+      <li><a href="shop.html" class="active-link">Shop</a></li>
+      <li><a href="index.html#design">Design</a></li>
+      <li><a href="index.html#specs">Specs</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+      </svg>
+    </button>
+    <a href="index.html#buy" class="nav-cta">Buy — $89</a>
+  </div>
+</nav>
+
+<header class="shop-hero" data-reveal>
+  <p class="hero-watermark" aria-hidden="true">LAMZU</p>
+  <p class="eyebrow">Full lineup</p>
+  <h1 class="reveal-lines">
+    <span class="line-mask"><span class="line-inner">Every desk,</span></span>
+    <span class="line-mask"><span class="line-inner grad-text">one language.</span></span>
+  </h1>
+  <p class="shop-hero-sub">Mice, pads and keyboards built to the same rule: nothing added that doesn't earn its weight.</p>
+</header>
+
+<main class="shop-main" id="main-content">
+  <div class="filter-bar" role="tablist" aria-label="Filter products by category" data-reveal>
+    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+    <button class="filter-btn" data-filter="mice" role="tab" aria-selected="false">Mice</button>
+    <button class="filter-btn" data-filter="pads" role="tab" aria-selected="false">Mousepads</button>
+    <button class="filter-btn" data-filter="keyboards" role="tab" aria-selected="false">Keyboards</button>
+  </div>
+
+  <div class="product-grid" data-reveal>
+
+    <article class="product-card" data-category="mice" data-desc="The everyday pick — small in the hand, no compromise in the sensor.">
+      <div class="product-thumb">
+        <svg class="product-icon"><use href="#icon-mouse-ergo" fill="url(#grad-glacier)"/></svg>
+      </div>
+      <p class="product-cat">Mouse</p>
+      <h3>Atlantis Mini</h3>
+      <p class="product-spec">53 g · 26,000 DPI · 4,000 Hz</p>
+      <p class="product-price">$89</p>
+      <button class="qv-trigger" type="button">Quick look</button>
+    </article>
+
+    <article class="product-card" data-category="mice" data-desc="Full-size and ambidextrous, built for a heavier, planted grip.">
+      <div class="product-thumb">
+        <svg class="product-icon"><use href="#icon-mouse-sym" fill="url(#grad-cyan)"/></svg>
+      </div>
+      <p class="product-cat">Mouse</p>
+      <h3>Atlantis OG V2</h3>
+      <p class="product-spec">55 g · Ambidextrous · 4,000 Hz</p>
+      <p class="product-price">$99</p>
+      <button class="qv-trigger" type="button">Quick look</button>
+    </article>
+
+    <article class="product-card" data-category="mice" data-desc="Our lightest shell yet, tuned for fast, low-effort flicks.">
+      <div class="product-thumb">
+        <svg class="product-icon"><use href="#icon-mouse-ergo" fill="url(#grad-midnight)"/></svg>
+      </div>
+      <p class="product-cat">Mouse</p>
+      <h3>Thorn</h3>
+      <p class="product-spec">49 g · Compact shell · 1,000 Hz</p>
+      <p class="product-price">$79</p>
+      <button class="qv-trigger" type="button">Quick look</button>
+    </article>
+
+    <article class="product-card" data-category="mice" data-desc="Budget-friendly wireless, same core sensor platform.">
+      <div class="product-thumb">
+        <svg class="product-icon"><use href="#icon-mouse-sym" fill="url(#grad-arctic)"/></svg>
+      </div>
+      <p class="product-cat">Mouse</p>
+      <h3>Maya X</h3>
+      <p class="product-spec">52 g · Wireless · 1,000 Hz</p>
+      <p class="product-price">$69</p>
+      <button class="qv-trigger" type="button">Quick look</button>
+    </article>
+
+    <article class="product-card" data-category="pads" data-desc="Room for the mouse, the keyboard, and then some.">
+      <div class="product-thumb">
+        <svg class="product-icon product-icon-pad"><use href="#icon-pad" fill="url(#grad-glacier)"/></svg>
+      </div>
+      <p class="product-cat">Mousepad</p>
+      <h3>Deskmat XL</h3>
+      <p class="product-spec">900 × 400 mm · Cloth</p>
+      <p class="product-price">$29</p>
+      <button class="qv-trigger" type="button">Quick look</button>
+    </article>
+
+    <article class="product-card" data-category="pads" data-desc="A tighter weave for control players who brake, not glide.">
+      <div class="product-thumb">
+        <svg class="product-icon product-icon-pad"><use href="#icon-pad" fill="url(#grad-midnight)"/></svg>
+      </div>
+      <p class="product-cat">Mousepad</p>
+      <h3>Glide Pro</h3>
+      <p class="product-spec">450 × 400 mm · Hybrid weave</p>
+      <p class="product-price">$19</p>
+      <button class="qv-trigger" type="button">Quick look</button>
+    </article>
+
+    <article class="product-card" data-category="pads" data-desc="Glass-smooth surface for the fastest possible swipes.">
+      <div class="product-thumb">
+        <svg class="product-icon product-icon-pad"><use href="#icon-pad" fill="url(#grad-cyan)"/></svg>
+      </div>
+      <p class="product-cat">Mousepad</p>
+      <h3>Ice Pad</h3>
+      <p class="product-spec">440 × 400 mm · Glass surface</p>
+      <p class="product-price">$34</p>
+      <button class="qv-trigger" type="button">Quick look</button>
+    </article>
+
+    <article class="product-card" data-category="keyboards" data-desc="Compact enough for a flick, full enough for code.">
+      <div class="product-thumb">
+        <svg class="product-icon product-icon-kb"><use href="#icon-keyboard" fill="url(#grad-glacier)"/></svg>
+      </div>
+      <p class="product-cat">Keyboard</p>
+      <h3>Keystone 65</h3>
+      <p class="product-spec">65% · Hot-swap · Gasket mount</p>
+      <p class="product-price">$129</p>
+      <button class="qv-trigger" type="button">Quick look</button>
+    </article>
+
+    <article class="product-card" data-category="keyboards" data-desc="The numpad's gone; everything else stays.">
+      <div class="product-thumb">
+        <svg class="product-icon product-icon-kb"><use href="#icon-keyboard" fill="url(#grad-arctic)"/></svg>
+      </div>
+      <p class="product-cat">Keyboard</p>
+      <h3>Keystone TKL</h3>
+      <p class="product-spec">Tenkeyless · Hot-swap · USB‑C</p>
+      <p class="product-price">$149</p>
+      <button class="qv-trigger" type="button">Quick look</button>
+    </article>
+
+  </div>
+
+  <p class="empty-state" hidden>Nothing in this category yet.</p>
+</main>
+
+<dialog class="quick-view" id="quickView" aria-labelledby="qvName">
+  <button class="qv-close" id="qvClose" type="button" aria-label="Close">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="qv-visual">
+    <svg class="qv-icon" id="qvIcon"><use id="qvUse" href="#icon-mouse-ergo" fill="url(#grad-glacier)"/></svg>
+  </div>
+  <div class="qv-body">
+    <p class="product-cat" id="qvCat">Mouse</p>
+    <h3 id="qvName">Product name</h3>
+    <p class="product-spec" id="qvSpec">Spec line</p>
+    <p class="qv-desc" id="qvDesc">Description.</p>
+    <p class="product-price" id="qvPrice">$0</p>
+  </div>
+</dialog>
+
+<footer class="footer">
+  <p>Concept product page — design study by MKZV. Not an official Lamzu property.</p>
+</footer>
+
+<script src="js/shop.js"></script>
+</body>
+</html>

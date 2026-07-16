@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="view-transition" content="same-origin">
+<meta name="description" content="Atlantis Mini — a 53-gram wireless mouse with a 26,000 DPI sensor and 4,000 Hz dongle. Concept product page design study.">
+<meta name="theme-color" content="#060911">
+<title>Lamzu Atlantis Mini — Precision, weightless.</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233e8eff'/%3E%3Crect x='11' y='7' width='10' height='18' rx='5' fill='%23eaf1ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('lamzu-theme'); } catch (e) {}
+  var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.documentElement.dataset.theme = theme;
+})();
+</script>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<div class="noise"></div>
+<div class="glow glow-a"></div>
+<div class="glow glow-b"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark"></span>LAMZU
+    </a>
+    <ul class="nav-links">
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="#design">Design</a></li>
+      <li><a href="#sensor">Sensor</a></li>
+      <li><a href="#battery">Battery</a></li>
+      <li><a href="#specs">Specs</a></li>
+      <li><a href="#colors">Colors</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+      </svg>
+    </button>
+    <a href="#buy" class="nav-cta">Buy — $89</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <p class="hero-watermark" aria-hidden="true">ATLANTIS</p>
+  <div class="hero-copy" data-reveal>
+    <p class="eyebrow">Atlantis Mini · Wireless</p>
+    <h1 class="reveal-lines">
+      <span class="line-mask"><span class="line-inner">Precision,</span></span>
+      <span class="line-mask"><span class="line-inner grad-text">weightless.</span></span>
+    </h1>
+    <p class="hero-sub">A 53‑gram shell built around a 26,000&nbsp;DPI sensor and a 4,000&nbsp;Hz dongle. Nothing added that doesn't earn its weight.</p>
+    <div class="hero-actions">
+      <a href="#buy" class="btn btn-primary">Buy now</a>
+      <a href="#design" class="btn btn-ghost">Explore design ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-visual" data-reveal>
+   <div class="mouse-float">
+    <svg class="mouse-hero" id="heroMouse" viewBox="0 0 420 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bodyGrad" x1="60" y1="20" x2="360" y2="600" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#8FD6FF"/>
+          <stop offset="0.45" stop-color="#3E8EFF"/>
+          <stop offset="1" stop-color="#0B3D91"/>
+        </linearGradient>
+        <linearGradient id="sheen" x1="80" y1="0" x2="220" y2="300" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="underglow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#3E8EFF" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#3E8EFF" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="wheelGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#EAF6FF"/>
+          <stop offset="1" stop-color="#9FCBFF"/>
+        </linearGradient>
+      </defs>
+
+      <ellipse cx="210" cy="580" rx="150" ry="34" fill="url(#underglow)"/>
+
+      <path id="mouseBody" d="M210 18
+        C 300 18 372 76 384 190
+        C 394 280 392 400 372 470
+        C 356 528 306 602 210 602
+        C 114 602 64 528 48 470
+        C 28 400 26 280 36 190
+        C 48 76 120 18 210 18 Z"
+        fill="url(#bodyGrad)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+
+      <path d="M210 18 C300 18 372 76 384 190 C392 260 392 320 386 370
+        C300 340 220 330 210 330 C200 330 120 340 34 370
+        C28 320 28 260 36 190 C48 76 120 18 210 18 Z"
+        fill="url(#sheen)"/>
+
+      <path d="M210 60 C 210 170 210 260 210 330" stroke="rgba(6,9,17,0.35)" stroke-width="2" stroke-linecap="round"/>
+
+      <rect x="192" y="70" width="36" height="86" rx="18" fill="url(#wheelGrad)" stroke="rgba(6,9,17,0.25)" stroke-width="1.5"/>
+      <line x1="210" y1="86" x2="210" y2="140" stroke="rgba(6,9,17,0.3)" stroke-width="2" stroke-linecap="round"/>
+
+      <g class="grip-lines" stroke="rgba(6,9,17,0.18)" stroke-width="2" stroke-linecap="round">
+        <line x1="44" y1="300" x2="66" y2="292"/>
+        <line x1="42" y1="322" x2="64" y2="314"/>
+        <line x1="42" y1="344" x2="64" y2="336"/>
+        <line x1="44" y1="366" x2="66" y2="358"/>
+        <line x1="376" y1="300" x2="354" y2="292"/>
+        <line x1="378" y1="322" x2="356" y2="314"/>
+        <line x1="378" y1="344" x2="356" y2="336"/>
+        <line x1="376" y1="366" x2="354" y2="358"/>
+      </g>
+
+      <circle cx="210" cy="520" r="3" fill="rgba(6,9,17,0.35)"/>
+    </svg>
+   </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <section class="anatomy" id="anatomy" data-reveal data-active-stage="shell">
+    <div class="anatomy-inner">
+
+      <div class="anatomy-visual">
+        <div class="anatomy-visual-inner">
+          <div class="anatomy-tint"></div>
+          <svg class="mouse-anatomy" viewBox="0 0 420 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="210" cy="580" rx="150" ry="34" fill="url(#underglow)"/>
+            <use href="#mouseBody" fill="url(#bodyGrad)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+            <path d="M210 18 C300 18 372 76 384 190 C392 260 392 320 386 370
+              C300 340 220 330 210 330 C200 330 120 340 34 370
+              C28 320 28 260 36 190 C48 76 120 18 210 18 Z" fill="url(#sheen)"/>
+            <rect x="192" y="70" width="36" height="86" rx="18" fill="url(#wheelGrad)" stroke="rgba(6,9,17,0.25)" stroke-width="1.5"/>
+          </svg>
+          <div class="anatomy-tag" data-stage="shell" style="top:6%; left:66%;">
+            <span class="tag-dot"></span>Honeycomb shell
+          </div>
+          <div class="anatomy-tag" data-stage="sensor" style="top:26%; left:2%;">
+            <span class="tag-dot"></span>26K optical sensor
+          </div>
+          <div class="anatomy-tag" data-stage="battery" style="top:80%; left:64%;">
+            <span class="tag-dot"></span>70‑hour cell
+          </div>
+        </div>
+        <div class="anatomy-dots" aria-hidden="true">
+          <span class="dot" data-stage="shell"></span>
+          <span class="dot" data-stage="sensor"></span>
+          <span class="dot" data-stage="battery"></span>
+        </div>
+      </div>
+
+      <div class="anatomy-steps">
+        <article class="anatomy-step" id="design" data-stage="shell">
+          <p class="eyebrow">Shell</p>
+          <h2>A shell this light shouldn't feel this solid.</h2>
+          <p>We shave the shell down to 0.85mm and reinforce it with a honeycomb rib structure underneath — so the shell loses grams, not rigidity. No flex, no creak, no compromise on the click.</p>
+          <ul class="fact-list">
+            <li><span data-count="53" data-suffix=" g">0 g</span>total weight</li>
+            <li><span data-count="0.85" data-decimals="2" data-suffix=" mm">0 mm</span>shell thickness</li>
+            <li><span>IP54</span>dust &amp; splash resistant</li>
+          </ul>
+        </article>
+
+        <article class="anatomy-step" id="sensor" data-stage="sensor">
+          <p class="eyebrow">Sensor</p>
+          <h2>26,000 DPI. Zero smoothing, zero acceleration.</h2>
+          <p>The sensor tracks exactly what your hand does — nothing interpolated, nothing filtered. Paired with a 4,000&nbsp;Hz wireless dongle, input lag drops low enough that wired stops being the "serious" option.</p>
+          <ul class="fact-list">
+            <li><span data-count="26000" data-suffix="">0</span>max DPI</li>
+            <li><span data-count="4000" data-suffix=" Hz">0 Hz</span>polling rate</li>
+            <li><span>&lt;1 ms</span>click latency</li>
+          </ul>
+        </article>
+
+        <article class="anatomy-step" id="battery" data-stage="battery">
+          <p class="eyebrow">Battery</p>
+          <h2>70 hours. Charges while you play.</h2>
+          <p>One overnight charge covers a full week of ranked. When it does run low, five minutes on USB‑C buys another six hours — so the only thing that runs out first is your session.</p>
+          <ul class="fact-list">
+            <li><span data-count="70" data-suffix=" hrs">0 hrs</span>battery life</li>
+            <li><span>USB‑C</span>fast charge, pass‑through play</li>
+            <li><span>5 min</span>→ 6 hrs quick charge</li>
+          </ul>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="specs" id="specs" data-reveal>
+    <h2>Specs, in full.</h2>
+    <div class="specs-table">
+      <div class="specs-row"><span>Sensor</span><span>26K DPI optical, 650 IPS</span></div>
+      <div class="specs-row"><span>Polling rate</span><span>4,000 Hz (wireless dongle)</span></div>
+      <div class="specs-row"><span>Switches</span><span>60M‑click optical‑mechanical</span></div>
+      <div class="specs-row"><span>Weight</span><span>53 g</span></div>
+      <div class="specs-row"><span>Battery</span><span>70 hrs @ 1,000 Hz</span></div>
+      <div class="specs-row"><span>Connectivity</span><span>2.4 GHz dongle · Bluetooth 5.1 · USB‑C</span></div>
+      <div class="specs-row"><span>Feet</span><span>100% virgin PTFE skates</span></div>
+      <div class="specs-row"><span>Rating</span><span>IP54 dust &amp; splash resistant</span></div>
+    </div>
+  </section>
+
+  <section class="colors" id="colors" data-reveal>
+    <h2>Choose your finish.</h2>
+    <p class="colors-sub">The shell, recolored in real time.</p>
+    <div class="colors-stage">
+      <svg class="mouse-mini" id="miniMouse" viewBox="0 0 420 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="miniBodyGrad" x1="60" y1="20" x2="360" y2="600" gradientUnits="userSpaceOnUse">
+            <stop id="miniStop0" offset="0" stop-color="#8FD6FF"/>
+            <stop id="miniStop1" offset="0.45" stop-color="#3E8EFF"/>
+            <stop id="miniStop2" offset="1" stop-color="#0B3D91"/>
+          </linearGradient>
+        </defs>
+        <use href="#mouseBody" fill="url(#miniBodyGrad)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="swatches">
+      <button class="swatch active" data-c0="#8FD6FF" data-c1="#3E8EFF" data-c2="#0B3D91" style="--sw:#3E8EFF">
+        <span></span>Glacier Blue
+      </button>
+      <button class="swatch" data-c0="#EAF1FF" data-c1="#C4D6EE" data-c2="#7C93B8" style="--sw:#C4D6EE">
+        <span></span>Arctic White
+      </button>
+      <button class="swatch" data-c0="#4A4F5C" data-c1="#22252E" data-c2="#0A0B0F" style="--sw:#22252E">
+        <span></span>Midnight
+      </button>
+    </div>
+  </section>
+
+  <section class="cta" id="buy" data-reveal>
+    <h2>Atlantis Mini</h2>
+    <p class="cta-price">$89</p>
+    <p class="cta-sub">Free shipping. 30‑day returns. 2‑year warranty.</p>
+    <a href="#top" class="btn btn-primary btn-lg">Add to bag</a>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>Concept product page — design study by MKZV. Not an official Lamzu property.</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
