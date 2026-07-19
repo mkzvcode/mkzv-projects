@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nova — необанк, который не бесит</title>
+<meta name="description" content="Nova — необанк нового поколения: бесплатная карта, умная аналитика трат, кэшбэк до 15% живыми рублями, мгновенные переводы. Без скрытых комиссий." />
+<meta name="robots" content="noindex, follow" />
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
+<script src="assets/js/tailwind.js"></script>
+<script>
+tailwind.config={theme:{extend:{
+  fontFamily:{display:['Sora','sans-serif'],body:['Manrope','sans-serif']},
+  colors:{ink:'#070a12',panel:'#0d1220',line:'#1b2436',mint:'#4af0c4',iris:'#7b8cff',lilac:'#c4a0ff'},
+}}}
+</script>
+<style>
+  html{scroll-behavior:smooth}
+  body{background:#070a12;font-family:'Manrope',sans-serif}
+  ::selection{background:#4af0c4;color:#070a12}
+  .font-display{font-family:'Sora',sans-serif}
+  .grid-bg{background-image:linear-gradient(rgba(123,140,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(123,140,255,.06) 1px,transparent 1px);background-size:44px 44px}
+  .glass{background:rgba(255,255,255,.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08)}
+  .glow-mint{box-shadow:0 0 0 1px rgba(74,240,196,.3),0 20px 60px -20px rgba(74,240,196,.4)}
+  .aurora{background:radial-gradient(60% 60% at 20% 20%,rgba(74,240,196,.25),transparent 60%),radial-gradient(50% 50% at 85% 30%,rgba(123,140,255,.28),transparent 60%),radial-gradient(50% 60% at 60% 100%,rgba(196,160,255,.2),transparent 60%)}
+  .aurora-move{animation:aur 18s ease-in-out infinite alternate}
+  @keyframes aur{to{transform:translate3d(3%,-2%,0) scale(1.08)}}
+  .reveal{opacity:0;transform:translateY(30px);transition:.9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .marquee{animation:mq 24s linear infinite}
+  @keyframes mq{to{transform:translateX(-50%)}}
+  .phone-float{animation:float 6s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-16px)}}
+  .grad-text{background:linear-gradient(90deg,#4af0c4,#7b8cff,#c4a0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  input[type=range]{-webkit-appearance:none;height:4px;border-radius:4px;background:#1b2436;outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#4af0c4;cursor:pointer;box-shadow:0 0 0 4px rgba(74,240,196,.2)}
+  .faq-item[open] .faq-icon{transform:rotate(45deg)}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .bar{transform:scaleY(0);transform-origin:bottom;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+  .bar.in{transform:scaleY(1)}
+</style>
+</head>
+<body class="text-slate-200 antialiased overflow-x-hidden">
+
+<a href="https://github.com/mkzvcode/mkzv-projects" target="_blank" rel="noopener" class="fixed left-5 bottom-5 z-50 text-xs tracking-wider uppercase text-slate-400 glass px-4 py-2.5 rounded-full hover:text-mint transition">← все проекты</a>
+
+<!-- NAV -->
+<nav id="nav" class="fixed top-0 inset-x-0 z-40 transition-all duration-300">
+  <div class="max-w-6xl mx-auto px-6 flex items-center justify-between py-5">
+    <div class="font-display font-800 text-xl tracking-tight text-white">nova<span class="text-mint">•</span></div>
+    <div class="hidden md:flex items-center gap-9 text-sm text-slate-300">
+      <a href="#features" class="hover:text-white transition">Возможности</a>
+      <a href="#analytics" class="hover:text-white transition">Аналитика</a>
+      <a href="#tools" class="hover:text-white transition">Калькуляторы</a>
+      <a href="#pricing" class="hover:text-white transition">Тарифы</a>
+    </div>
+    <a href="#tools" class="text-sm font-600 bg-mint text-ink px-5 py-2.5 rounded-full hover:brightness-110 transition">Открыть карту</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="relative min-h-screen grid-bg overflow-hidden pt-32 pb-20">
+  <div class="absolute inset-0 aurora aurora-move opacity-70 pointer-events-none"></div>
+  <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink to-transparent"></div>
+  <div class="relative max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+    <div>
+      <div class="reveal inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-xs text-mint mb-8">
+        <span class="w-2 h-2 rounded-full bg-mint animate-pulse"></span> Необанк нового поколения
+      </div>
+      <h1 class="reveal font-display font-800 text-white leading-[0.98] tracking-tight text-5xl sm:text-6xl lg:text-7xl">
+        Банк, который<br/><span class="grad-text">не бесит.</span>
+      </h1>
+      <p class="reveal mt-7 text-lg text-slate-400 max-w-md leading-relaxed">
+        Карта, аналитика трат и кэшбэк до 15% — в одном приложении. Без скрытых комиссий и звонков «служба безопасности».
+      </p>
+      <div class="reveal mt-9 flex flex-wrap gap-4">
+        <a href="#tools" class="font-600 bg-mint text-ink px-7 py-3.5 rounded-full hover:brightness-110 transition">Оформить бесплатно</a>
+        <a href="#analytics" class="font-600 glass px-7 py-3.5 rounded-full text-white hover:bg-white/10 transition">Как это работает</a>
+      </div>
+      <div class="reveal mt-10 flex items-center gap-8 text-sm text-slate-400">
+        <div><span class="font-display font-700 text-2xl text-white counter" data-to="2400000" data-suffix="" data-fmt="short">0</span><br/>клиентов</div>
+        <div><span class="font-display font-700 text-2xl text-white">0 ₽</span><br/>обслуживание</div>
+        <div><span class="font-display font-700 text-2xl text-white">4.9 ★</span><br/>в сторах</div>
+      </div>
+    </div>
+
+    <!-- Phone mock -->
+    <div class="reveal relative flex justify-center" id="phoneWrap" style="perspective:1200px">
+      <div id="phone" class="phone-float relative w-[300px] h-[600px] rounded-[42px] glass glow-mint p-4" style="transform-style:preserve-3d;transition:transform .2s ease-out">
+        <div class="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black/60 rounded-full"></div>
+        <div class="h-full rounded-[30px] bg-gradient-to-b from-panel to-ink overflow-hidden p-5 pt-10">
+          <p class="text-xs text-slate-400">Доступно</p>
+          <p class="font-display font-800 text-3xl text-white mt-1">248 350 ₽</p>
+          <!-- card -->
+          <div class="mt-5 rounded-2xl p-5 bg-gradient-to-br from-iris via-lilac to-mint relative overflow-hidden" style="transform:translateZ(40px)">
+            <div class="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-white/20 blur-xl"></div>
+            <p class="text-ink/70 text-xs font-600">Nova Black</p>
+            <p class="font-display text-ink font-700 tracking-widest mt-6">•••• 4417</p>
+            <div class="flex justify-between items-end mt-3">
+              <span class="text-ink/70 text-xs">М. КАZAКOV</span>
+              <span class="font-display font-700 text-ink">VISA</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 mt-5 mb-2">Траты за неделю</p>
+          <canvas id="miniChart" height="90"></canvas>
+          <div class="mt-3 flex items-center justify-between glass rounded-xl px-3 py-2.5">
+            <div class="flex items-center gap-2"><span class="w-8 h-8 rounded-full bg-mint/20 grid place-items-center text-mint">↑</span><span class="text-sm">Кэшбэк за март</span></div>
+            <span class="font-display font-700 text-mint">+3 420 ₽</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- marquee -->
+  <div class="relative mt-16 overflow-hidden border-y border-line py-4">
+    <div class="marquee whitespace-nowrap flex gap-12 text-slate-500 font-display font-600 text-lg w-max">
+      <span>0% за переводы</span><span class="text-mint">•</span><span>Кэшбэк до 15%</span><span class="text-iris">•</span><span>Бесплатное обслуживание</span><span class="text-lilac">•</span><span>Снятие без комиссии</span><span class="text-mint">•</span>
+      <span>0% за переводы</span><span class="text-mint">•</span><span>Кэшбэк до 15%</span><span class="text-iris">•</span><span>Бесплатное обслуживание</span><span class="text-lilac">•</span><span>Снятие без комиссии</span><span class="text-mint">•</span>
+    </div>
+  </div>
+</header>
+
+<!-- FEATURES — bento -->
+<section id="features" class="max-w-6xl mx-auto px-6 py-28">
+  <div class="reveal max-w-xl">
+    <p class="text-mint text-sm font-600 tracking-wider uppercase">Возможности</p>
+    <h2 class="font-display font-800 text-white text-4xl sm:text-5xl mt-4 leading-tight">Всё, что нужно.<br/>Ничего лишнего.</h2>
+  </div>
+  <div class="grid md:grid-cols-3 gap-5 mt-14">
+    <div class="reveal glass rounded-3xl p-8 hover:-translate-y-2 transition duration-500 md:row-span-2 flex flex-col">
+      <div class="w-12 h-12 rounded-2xl bg-mint/15 grid place-items-center text-mint text-2xl mb-6">◎</div>
+      <h3 class="font-display font-700 text-white text-xl mb-3">Умная аналитика</h3>
+      <p class="text-slate-400 leading-relaxed">Приложение само раскладывает траты по категориям и подсказывает, где вы переплачиваете.</p>
+      <div class="mt-auto pt-8 space-y-2">
+        <div class="flex items-center justify-between text-sm"><span class="text-slate-300">Кафе</span><span class="text-white font-600">32%</span></div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden"><div class="h-full bg-mint rounded-full" style="width:32%"></div></div>
+        <div class="flex items-center justify-between text-sm"><span class="text-slate-300">Транспорт</span><span class="text-white font-600">21%</span></div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden"><div class="h-full bg-iris rounded-full" style="width:21%"></div></div>
+        <div class="flex items-center justify-between text-sm"><span class="text-slate-300">Подписки</span><span class="text-white font-600">14%</span></div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden"><div class="h-full bg-lilac rounded-full" style="width:14%"></div></div>
+      </div>
+    </div>
+    <div class="reveal glass rounded-3xl p-8 hover:-translate-y-2 transition duration-500">
+      <div class="w-12 h-12 rounded-2xl bg-iris/15 grid place-items-center text-iris text-2xl mb-6">⤢</div>
+      <h3 class="font-display font-700 text-white text-xl mb-3">Мгновенные переводы</h3>
+      <p class="text-slate-400 leading-relaxed">По номеру телефона, в любой банк, 24/7. Деньги приходят за секунды, а не «в течение суток».</p>
+    </div>
+    <div class="reveal glass rounded-3xl p-8 hover:-translate-y-2 transition duration-500">
+      <div class="w-12 h-12 rounded-2xl bg-lilac/15 grid place-items-center text-lilac text-2xl mb-6">✦</div>
+      <h3 class="font-display font-700 text-white text-xl mb-3">Кэшбэк, который видно</h3>
+      <p class="text-slate-400 leading-relaxed">До 15% в любимых категориях и живыми рублями, а не «баллами, которые нельзя потратить».</p>
+    </div>
+    <div class="reveal glass rounded-3xl p-8 hover:-translate-y-2 transition duration-500">
+      <div class="w-12 h-12 rounded-2xl bg-mint/15 grid place-items-center text-mint text-2xl mb-6">◐</div>
+      <h3 class="font-display font-700 text-white text-xl mb-3">Копилки с процентом</h3>
+      <p class="text-slate-400 leading-relaxed">Откладывайте на цель и получайте до 16% годовых. Снять можно в любой момент без потери процентов.</p>
+    </div>
+    <div class="reveal glass rounded-3xl p-8 hover:-translate-y-2 transition duration-500">
+      <div class="w-12 h-12 rounded-2xl bg-iris/15 grid place-items-center text-iris text-2xl mb-6">◈</div>
+      <h3 class="font-display font-700 text-white text-xl mb-3">Виртуальные карты</h3>
+      <p class="text-slate-400 leading-relaxed">Отдельная карта для подписок в один тап. Списали лишнее — заморозили, никто не украл основную.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ANALYTICS showcase -->
+<section id="analytics" class="relative py-28 overflow-hidden">
+  <div class="absolute inset-0 aurora opacity-20 pointer-events-none"></div>
+  <div class="relative max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+    <div class="reveal">
+      <p class="text-mint text-sm font-600 tracking-wider uppercase">Аналитика</p>
+      <h2 class="font-display font-800 text-white text-4xl sm:text-5xl mt-4 leading-tight">Видно каждый рубль.<br/>Без Excel.</h2>
+      <p class="text-slate-400 mt-6 leading-relaxed max-w-md">Наведите на сектор — приложение показывает, сколько ушло по категории и сколько вы на этом заработали кэшбэком. Никаких выписок в PDF.</p>
+      <div id="catList" class="mt-8 space-y-3 max-w-sm"></div>
+    </div>
+    <div class="reveal">
+      <div class="glass rounded-[32px] p-8 relative">
+        <div class="flex items-center justify-between mb-6">
+          <div><p class="text-slate-400 text-sm">Расходы за март</p><p class="font-display font-800 text-3xl text-white" id="spendTotal">— ₽</p></div>
+          <span class="text-xs glass px-3 py-1.5 rounded-full text-mint">↓ 12% к февралю</span>
+        </div>
+        <div class="relative w-full max-w-[280px] mx-auto">
+          <canvas id="donut"></canvas>
+          <div class="absolute inset-0 grid place-items-center pointer-events-none text-center">
+            <div><p class="text-slate-400 text-xs" id="donutLabel">Всего</p><p class="font-display font-800 text-2xl text-white" id="donutValue">100%</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS (functional) -->
+<section id="tools" class="relative py-28 grid-bg">
+  <div class="absolute inset-0 aurora opacity-30 pointer-events-none"></div>
+  <div class="relative max-w-6xl mx-auto px-6">
+    <div class="reveal text-center max-w-xl mx-auto mb-16">
+      <p class="text-mint text-sm font-600 tracking-wider uppercase">Попробуйте вживую</p>
+      <h2 class="font-display font-800 text-white text-4xl sm:text-5xl mt-4">Посчитайте свою выгоду</h2>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- Converter -->
+      <div class="reveal glass rounded-3xl p-8">
+        <h3 class="font-display font-700 text-white text-2xl mb-6">Конвертер валют</h3>
+        <div class="flex items-center gap-3">
+          <input id="cvAmount" type="number" value="1000" class="flex-1 bg-panel border border-line rounded-2xl px-5 py-4 text-white text-xl font-display font-600 focus:border-mint outline-none">
+          <select id="cvFrom" class="bg-panel border border-line rounded-2xl px-4 py-4 text-white focus:border-mint outline-none">
+            <option value="RUB">₽ RUB</option><option value="USD">$ USD</option><option value="EUR">€ EUR</option><option value="CNY">¥ CNY</option>
+          </select>
+        </div>
+        <div class="flex justify-center my-4"><button id="cvSwap" class="w-11 h-11 rounded-full bg-mint/15 text-mint grid place-items-center hover:rotate-180 transition duration-500 text-xl">⇅</button></div>
+        <div class="flex items-center gap-3">
+          <div id="cvResult" class="flex-1 bg-panel/60 border border-line rounded-2xl px-5 py-4 text-mint text-xl font-display font-700">—</div>
+          <select id="cvTo" class="bg-panel border border-line rounded-2xl px-4 py-4 text-white focus:border-mint outline-none">
+            <option value="USD">$ USD</option><option value="RUB">₽ RUB</option><option value="EUR">€ EUR</option><option value="CNY">¥ CNY</option>
+          </select>
+        </div>
+        <p id="cvRate" class="text-slate-500 text-sm mt-4">Курс обновлён только что · 0% комиссия Nova</p>
+      </div>
+
+      <!-- Cashback calc -->
+      <div class="reveal glass rounded-3xl p-8">
+        <h3 class="font-display font-700 text-white text-2xl mb-2">Калькулятор кэшбэка</h3>
+        <p class="text-slate-400 text-sm mb-6">Двигайте ползунки — покажем годовую выгоду.</p>
+        <div class="space-y-6">
+          <div>
+            <div class="flex justify-between text-sm mb-2"><span class="text-slate-300">Кафе и рестораны</span><span id="cbFoodV" class="font-display font-600 text-white">15 000 ₽</span></div>
+            <input id="cbFood" type="range" min="0" max="60000" value="15000" step="1000" class="w-full">
+          </div>
+          <div>
+            <div class="flex justify-between text-sm mb-2"><span class="text-slate-300">Супермаркеты</span><span id="cbGroceryV" class="font-display font-600 text-white">25 000 ₽</span></div>
+            <input id="cbGrocery" type="range" min="0" max="80000" value="25000" step="1000" class="w-full">
+          </div>
+          <div>
+            <div class="flex justify-between text-sm mb-2"><span class="text-slate-300">Путешествия</span><span id="cbTravelV" class="font-display font-600 text-white">8 000 ₽</span></div>
+            <input id="cbTravel" type="range" min="0" max="100000" value="8000" step="1000" class="w-full">
+          </div>
+        </div>
+        <div class="mt-7 rounded-2xl bg-gradient-to-br from-mint/20 to-iris/10 border border-mint/30 p-6 text-center">
+          <p class="text-slate-300 text-sm">Ваш кэшбэк за год</p>
+          <p id="cbTotal" class="font-display font-800 text-4xl text-mint mt-1">0 ₽</p>
+          <p class="text-slate-400 text-xs mt-2" id="cbMonth">≈ 0 ₽ в месяц живыми рублями</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="max-w-6xl mx-auto px-6 py-28">
+  <div class="glass rounded-[36px] p-10 sm:p-14 grid md:grid-cols-2 gap-12 items-center relative overflow-hidden">
+    <div class="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-iris/10 blur-3xl"></div>
+    <div class="reveal relative">
+      <p class="text-mint text-sm font-600 tracking-wider uppercase">Безопасность</p>
+      <h2 class="font-display font-800 text-white text-4xl mt-4 leading-tight">Ваши деньги — под замком, а не под честным словом.</h2>
+      <p class="text-slate-400 mt-6 leading-relaxed max-w-md">Мы не звоним и не просим коды. Всё подтверждение — внутри приложения по биометрии. Подозрительная операция замораживается автоматически.</p>
+    </div>
+    <div class="reveal grid grid-cols-2 gap-4 relative">
+      <div class="glass rounded-2xl p-6"><div class="text-mint text-2xl mb-3">◈</div><p class="text-white font-600">Биометрия</p><p class="text-slate-400 text-sm mt-1">Face ID на каждый платёж</p></div>
+      <div class="glass rounded-2xl p-6"><div class="text-iris text-2xl mb-3">❄</div><p class="text-white font-600">Заморозка в тап</p><p class="text-slate-400 text-sm mt-1">Потеряли карту — блок сразу</p></div>
+      <div class="glass rounded-2xl p-6"><div class="text-lilac text-2xl mb-3">◎</div><p class="text-white font-600">Антифрод-ИИ</p><p class="text-slate-400 text-sm mt-1">Ловит мошенников за 0.3 сек</p></div>
+      <div class="glass rounded-2xl p-6"><div class="text-mint text-2xl mb-3">₽</div><p class="text-white font-600">Страховка АСВ</p><p class="text-slate-400 text-sm mt-1">Вклады застрахованы</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="max-w-6xl mx-auto px-6 py-28">
+  <div class="reveal text-center max-w-xl mx-auto mb-14">
+    <p class="text-mint text-sm font-600 tracking-wider uppercase">Тарифы</p>
+    <h2 class="font-display font-800 text-white text-4xl sm:text-5xl mt-4">Честные и понятные</h2>
+  </div>
+  <div class="grid md:grid-cols-3 gap-5 items-stretch">
+    <div class="reveal glass rounded-3xl p-8 flex flex-col">
+      <p class="font-display font-700 text-white text-xl">Start</p>
+      <p class="font-display font-800 text-4xl text-white mt-4">0 ₽<span class="text-base text-slate-400 font-500">/мес</span></p>
+      <ul class="mt-6 space-y-3 text-slate-300 text-sm flex-1">
+        <li>✓ Бесплатная карта</li><li>✓ Кэшбэк 1%</li><li>✓ Переводы без комиссии</li><li class="text-slate-500">— Премиум-поддержка</li>
+      </ul>
+      <a href="#" class="mt-8 text-center glass rounded-full py-3 font-600 text-white hover:bg-white/10 transition">Выбрать</a>
+    </div>
+    <div class="reveal glass rounded-3xl p-8 flex flex-col relative glow-mint border-mint/40 md:-mt-4">
+      <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-mint text-ink text-xs font-700 px-3 py-1 rounded-full">Популярный</span>
+      <p class="font-display font-700 text-mint text-xl">Black</p>
+      <p class="font-display font-800 text-4xl text-white mt-4">299 ₽<span class="text-base text-slate-400 font-500">/мес</span></p>
+      <ul class="mt-6 space-y-3 text-slate-300 text-sm flex-1">
+        <li>✓ Всё из Start</li><li>✓ Кэшбэк до 15%</li><li>✓ Снятие без комиссии</li><li>✓ Проходы в бизнес-залы</li>
+      </ul>
+      <a href="#" class="mt-8 text-center bg-mint text-ink rounded-full py-3 font-700 hover:brightness-110 transition">Выбрать</a>
+    </div>
+    <div class="reveal glass rounded-3xl p-8 flex flex-col">
+      <p class="font-display font-700 text-white text-xl">Business</p>
+      <p class="font-display font-800 text-4xl text-white mt-4">990 ₽<span class="text-base text-slate-400 font-500">/мес</span></p>
+      <ul class="mt-6 space-y-3 text-slate-300 text-sm flex-1">
+        <li>✓ Счёт для ИП и ООО</li><li>✓ Онлайн-бухгалтерия</li><li>✓ Зарплатный проект</li><li>✓ Менеджер 24/7</li>
+      </ul>
+      <a href="#" class="mt-8 text-center glass rounded-full py-3 font-600 text-white hover:bg-white/10 transition">Выбрать</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="max-w-6xl mx-auto px-6 py-28">
+  <div class="reveal text-center max-w-xl mx-auto mb-14">
+    <p class="text-mint text-sm font-600 tracking-wider uppercase">Отзывы</p>
+    <h2 class="font-display font-800 text-white text-4xl sm:text-5xl mt-4">Уже пересели на Nova</h2>
+  </div>
+  <div class="grid md:grid-cols-3 gap-5">
+    <figure class="reveal glass rounded-3xl p-7 flex flex-col">
+      <div class="text-mint mb-4 tracking-widest">★★★★★</div>
+      <blockquote class="text-slate-200 leading-relaxed flex-1">«Перевёл сюда зарплату и бизнес. Кэшбэк реально живыми деньгами, а поддержка отвечает за минуту, а не за сутки.»</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3">
+        <img src="assets/img/a1.jpg" class="w-11 h-11 rounded-full object-cover" alt="Аватар"/>
+        <div><p class="text-white font-600 text-sm">Алина Керимова</p><p class="text-slate-400 text-xs">дизайнер, фриланс</p></div>
+      </figcaption>
+    </figure>
+    <figure class="reveal glass rounded-3xl p-7 flex flex-col md:mt-8">
+      <div class="text-mint mb-4 tracking-widest">★★★★★</div>
+      <blockquote class="text-slate-200 leading-relaxed flex-1">«Наконец-то банк, где аналитика трат понятна с первого взгляда. Вижу, куда уходят деньги, и переводы реально мгновенные.»</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3">
+        <img src="assets/img/a2.jpg" class="w-11 h-11 rounded-full object-cover" alt="Аватар"/>
+        <div><p class="text-white font-600 text-sm">Дмитрий Соколов</p><p class="text-slate-400 text-xs">владелец кофейни</p></div>
+      </figcaption>
+    </figure>
+    <figure class="reveal glass rounded-3xl p-7 flex flex-col">
+      <div class="text-mint mb-4 tracking-widest">★★★★★</div>
+      <blockquote class="text-slate-200 leading-relaxed flex-1">«Карту привезли на следующий день бесплатно. За полгода — ни одной скрытой комиссии. Просто работает.»</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3">
+        <img src="assets/img/a3.jpg" class="w-11 h-11 rounded-full object-cover" alt="Аватар"/>
+        <div><p class="text-white font-600 text-sm">Марина Волкова</p><p class="text-slate-400 text-xs">маркетолог</p></div>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="max-w-3xl mx-auto px-6 py-28">
+  <div class="reveal text-center mb-14">
+    <p class="text-mint text-sm font-600 tracking-wider uppercase">Вопросы</p>
+    <h2 class="font-display font-800 text-white text-4xl sm:text-5xl mt-4">Коротко о главном</h2>
+  </div>
+  <div class="space-y-3">
+    <details class="faq-item reveal glass rounded-2xl px-6 py-1 group">
+      <summary class="flex items-center justify-between cursor-pointer py-5 list-none text-white font-600">Сколько стоит обслуживание? <span class="faq-icon text-mint text-2xl transition-transform">+</span></summary>
+      <p class="text-slate-400 pb-5 leading-relaxed">Тариф Start — бесплатно навсегда. Никаких «первый год в подарок», а потом списания. Платные тарифы можно отключить в любой момент.</p>
+    </details>
+    <details class="faq-item reveal glass rounded-2xl px-6 py-1">
+      <summary class="flex items-center justify-between cursor-pointer py-5 list-none text-white font-600">Как быстро приедет карта? <span class="faq-icon text-mint text-2xl transition-transform">+</span></summary>
+      <p class="text-slate-400 pb-5 leading-relaxed">Курьер привозит карту на следующий день в крупных городах, бесплатно. А виртуальной картой можно платить уже через 3 минуты после регистрации.</p>
+    </details>
+    <details class="faq-item reveal glass rounded-2xl px-6 py-1">
+      <summary class="flex items-center justify-between cursor-pointer py-5 list-none text-white font-600">Кэшбэк — это баллы? <span class="faq-icon text-mint text-2xl transition-transform">+</span></summary>
+      <p class="text-slate-400 pb-5 leading-relaxed">Нет. Это живые рубли, которые падают на счёт и которыми можно платить где угодно. Никаких «баллов Спасибо, которые нельзя потратить».</p>
+    </details>
+    <details class="faq-item reveal glass rounded-2xl px-6 py-1">
+      <summary class="flex items-center justify-between cursor-pointer py-5 list-none text-white font-600">Вы будете звонить и предлагать кредиты? <span class="faq-icon text-mint text-2xl transition-transform">+</span></summary>
+      <p class="text-slate-400 pb-5 leading-relaxed">Никогда. Мы не продаём ваши данные и не устраиваем спам-обзвон. Всё общение — по вашей инициативе в чате приложения.</p>
+    </details>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="max-w-6xl mx-auto px-6 pb-28">
+  <div class="reveal relative overflow-hidden rounded-[36px] glass p-12 sm:p-16 text-center">
+    <div class="absolute inset-0 aurora aurora-move opacity-40"></div>
+    <div class="relative">
+      <h2 class="font-display font-800 text-white text-4xl sm:text-6xl leading-tight">Готовы к банку<br/>без нервов?</h2>
+      <p class="text-slate-300 mt-5 max-w-md mx-auto">Оформление за 3 минуты. Курьер привезёт карту бесплатно, куда скажете.</p>
+      <a href="#tools" class="inline-block mt-8 bg-mint text-ink font-700 px-9 py-4 rounded-full hover:brightness-110 transition">Оформить карту</a>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-line py-12">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-sm">
+    <div class="font-display font-800 text-white text-lg">nova<span class="text-mint">•</span></div>
+    <p>Работа-концепт © MKZV · дизайн и вёрстка</p>
+  </div>
+</footer>
+
+<script src="assets/js/chart.umd.min.js"></script>
+<script>
+  // nav scrolled
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>{nav.style.background=scrollY>30?'rgba(7,10,18,.75)':'transparent';
+    nav.style.backdropFilter=scrollY>30?'blur(14px)':'none';
+    nav.style.borderBottom=scrollY>30?'1px solid rgba(27,36,54,.8)':'none';},{passive:true});
+
+  // reveals
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*80)+'ms';io.observe(el)});
+
+  // counters
+  const fmt=n=>n.toLocaleString('ru-RU',{maximumFractionDigits:2});
+  const shortFmt=n=>n>=1e6?(n/1e6).toFixed(1).replace('.0','')+'M':n>=1e3?Math.round(n/1e3)+'K':n;
+  const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){
+    const el=e.target,to=+el.dataset.to,short=el.dataset.fmt==='short';const o={v:0};
+    const start=performance.now();
+    (function tick(t){const p=Math.min((t-start)/1600,1);const e2=1-Math.pow(1-p,3);
+      el.textContent=short?shortFmt(Math.round(to*e2)):fmt(Math.round(to*e2));
+      if(p<1)requestAnimationFrame(tick)})(start);
+    cio.unobserve(el);
+  }}),{threshold:.6});
+  document.querySelectorAll('.counter').forEach(el=>cio.observe(el));
+
+  // phone 3D tilt
+  const phone=document.getElementById('phone'),pw=document.getElementById('phoneWrap');
+  pw.addEventListener('mousemove',e=>{const r=pw.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    phone.style.transform=`rotateY(${x*14}deg) rotateX(${-y*14}deg)`;});
+  pw.addEventListener('mouseleave',()=>phone.style.transform='rotateY(0) rotateX(0)');
+
+  // mini chart in phone
+  new Chart(document.getElementById('miniChart'),{
+    type:'bar',
+    data:{labels:['','','','','','',''],datasets:[{data:[40,65,35,80,55,90,60],
+      backgroundColor:['#7b8cff','#7b8cff','#7b8cff','#4af0c4','#7b8cff','#c4a0ff','#7b8cff'],borderRadius:6,barPercentage:.6}]},
+    options:{plugins:{legend:{display:false},tooltip:{enabled:false}},
+      scales:{x:{display:false},y:{display:false}},animation:{duration:1200}}
+  });
+
+  // ANALYTICS donut
+  const cats=[
+    {name:'Кафе и рестораны',val:24800,color:'#4af0c4'},
+    {name:'Супермаркеты',val:18300,color:'#7b8cff'},
+    {name:'Транспорт',val:9200,color:'#c4a0ff'},
+    {name:'Подписки',val:5400,color:'#f0a0d0'},
+    {name:'Прочее',val:7100,color:'#3a465e'},
+  ];
+  const spendTotal=cats.reduce((s,c)=>s+c.val,0);
+  document.getElementById('spendTotal').textContent=fmt(spendTotal)+' ₽';
+  const donut=new Chart(document.getElementById('donut'),{
+    type:'doughnut',
+    data:{labels:cats.map(c=>c.name),datasets:[{data:cats.map(c=>c.val),backgroundColor:cats.map(c=>c.color),borderWidth:0,cutout:'72%'}]},
+    options:{plugins:{legend:{display:false},tooltip:{enabled:false}},
+      animation:{animateRotate:true,duration:1400},
+      onHover:(e,els)=>{const l=document.getElementById('donutLabel'),v=document.getElementById('donutValue');
+        if(els.length){const i=els[0].index;l.textContent=cats[i].name;v.textContent=Math.round(cats[i].val/spendTotal*100)+'%';}
+        else{l.textContent='Всего';v.textContent='100%';}}}
+  });
+  // category list
+  const catList=document.getElementById('catList');
+  cats.forEach(c=>{
+    const pct=Math.round(c.val/spendTotal*100);
+    catList.insertAdjacentHTML('beforeend',
+      `<div class="flex items-center gap-3"><span class="w-3 h-3 rounded-full" style="background:${c.color}"></span>
+       <span class="text-slate-300 text-sm flex-1">${c.name}</span>
+       <span class="text-white font-600 text-sm">${fmt(c.val)} ₽</span>
+       <span class="text-slate-500 text-xs w-8 text-right">${pct}%</span></div>`);
+  });
+
+  // CONVERTER — rates relative to RUB
+  const rates={RUB:1,USD:0.0106,EUR:0.0098,CNY:0.076};
+  const sym={RUB:'₽',USD:'$',EUR:'€',CNY:'¥'};
+  const A=document.getElementById('cvAmount'),F=document.getElementById('cvFrom'),T=document.getElementById('cvTo');
+  const R=document.getElementById('cvResult'),rate=document.getElementById('cvRate');
+  function convert(){
+    const amt=parseFloat(A.value)||0;
+    const inRub=amt/rates[F.value];
+    const out=inRub*rates[T.value];
+    R.textContent=fmt(out)+' '+sym[T.value];
+    const one=(1/rates[F.value])*rates[T.value];
+    rate.textContent=`1 ${F.value} = ${fmt(one)} ${T.value} · 0% комиссия Nova`;
+  }
+  [A,F,T].forEach(el=>el.addEventListener('input',convert));
+  document.getElementById('cvSwap').addEventListener('click',()=>{[F.value,T.value]=[T.value,F.value];convert()});
+  convert();
+
+  // CASHBACK — food 8%, grocery 5%, travel 15%
+  const cb={food:{el:'cbFood',v:'cbFoodV',rate:.08},grocery:{el:'cbGrocery',v:'cbGroceryV',rate:.05},travel:{el:'cbTravel',v:'cbTravelV',rate:.15}};
+  const total=document.getElementById('cbTotal'),month=document.getElementById('cbMonth');
+  function calcCb(){
+    let year=0;
+    for(const k in cb){
+      const val=+document.getElementById(cb[k].el).value;
+      document.getElementById(cb[k].v).textContent=fmt(val)+' ₽';
+      year+=val*12*cb[k].rate;
+    }
+    total.textContent=fmt(Math.round(year))+' ₽';
+    month.textContent=`≈ ${fmt(Math.round(year/12))} ₽ в месяц живыми рублями`;
+  }
+  Object.values(cb).forEach(c=>document.getElementById(c.el).addEventListener('input',calcCb));
+  calcCb();
+</script>
+</body>
+</html>

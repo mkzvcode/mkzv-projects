@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Terra — семейная винодельня · от лозы до бокала</title>
+<meta name="description" content="Terra — семейная винодельня с 1962 года. Ручной сбор, выдержка в дубе, виртуальный сомелье и дегустации на закате в долине южного склона." />
+<meta name="robots" content="noindex, follow" />
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
+<style>
+  :root{
+    --ink:#140a0b; --ink-2:#1c0d0f; --wine:#3d1620; --wine-2:#2a0e12;
+    --gold:#c9a469; --gold-hi:#e6cf9c; --gold-soft:#d9c39a;
+    --cream:#f4ecdd; --cream-dim:#c6b9a5; --cream-faint:#8f8375;
+    --parchment:#efe6d4; --parchment-ink:#241512;
+    --serif:'Cormorant Garamond',serif;
+    --sans:'Jost',sans-serif;
+    --ease:cubic-bezier(.16,.84,.28,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink); color:var(--cream);
+    font-family:var(--sans); font-weight:300;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    cursor:none;
+  }
+  @media(hover:none){body{cursor:auto}}
+  body::after{ /* grain */
+    content:""; position:fixed; inset:0; z-index:9998; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  ::selection{background:var(--gold);color:var(--ink)}
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.02}
+  a{color:inherit;text-decoration:none}
+  img{display:block}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 30px}
+  .eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.4em;
+    text-transform:uppercase;color:var(--gold);font-weight:400}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);opacity:.7}
+  .eyebrow.center::after{content:"";width:26px;height:1px;background:var(--gold);opacity:.7}
+
+  /* custom cursor */
+  .cursor{position:fixed;top:0;left:0;width:9px;height:9px;border-radius:50%;background:var(--gold);
+    z-index:10000;pointer-events:none;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s,opacity .3s;mix-blend-mode:difference}
+  .cursor-ring{position:fixed;top:0;left:0;width:40px;height:40px;border:1px solid rgba(201,164,105,.6);border-radius:50%;
+    z-index:10000;pointer-events:none;transform:translate(-50%,-50%);transition:width .35s var(--ease),height .35s var(--ease),opacity .3s}
+  body.hovering .cursor{width:0;height:0}
+  body.hovering .cursor-ring{width:66px;height:66px;background:rgba(201,164,105,.08)}
+  @media(hover:none){.cursor,.cursor-ring{display:none}}
+
+  /* progress bar */
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-hi));z-index:300}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:26px 0;transition:.5s var(--ease)}
+  nav.scrolled{background:rgba(20,10,11,.7);backdrop-filter:blur(14px) saturate(1.2);padding:15px 0;
+    border-bottom:1px solid rgba(201,164,105,.14)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:var(--serif);font-size:27px;letter-spacing:.22em;color:var(--cream);display:flex;align-items:center;gap:10px}
+  .brand b{color:var(--gold);font-weight:500}
+  .brand svg{width:20px;height:20px;opacity:.9}
+  .navlinks{display:flex;gap:40px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase}
+  .navlinks a{position:relative;opacity:.8;transition:.3s}
+  .navlinks a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:.4s var(--ease)}
+  .navlinks a:hover{opacity:1}.navlinks a:hover::after{width:100%}
+  .nav-cta{border:1px solid rgba(201,164,105,.4);padding:9px 20px;border-radius:40px;font-size:11.5px;
+    letter-spacing:.18em;text-transform:uppercase;transition:.4s}
+  .nav-cta:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+  @media(max-width:860px){.navlinks{display:none}}
+
+  /* HERO */
+  .hero{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden;
+    background:radial-gradient(120% 90% at 82% -12%, rgba(61,22,32,.9), transparent 58%),
+      radial-gradient(90% 80% at -5% 105%, rgba(201,164,105,.12), transparent 55%),
+      linear-gradient(180deg,#140a0b,#1f0c10)}
+  .hero-photo{position:absolute;inset:-8% 0 0 0;background:url(assets/img/hero-vineyard.jpg) center/cover;
+    opacity:.34;filter:saturate(.82) contrast(1.06);will-change:transform}
+  .hero-photo::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(20,10,11,.5),rgba(20,10,11,.28) 38%,rgba(20,10,11,.95)),
+      radial-gradient(90% 70% at 50% 42%,transparent,rgba(20,10,11,.42))}
+  .hero-glow{position:absolute;width:66vw;height:66vw;right:-18vw;top:-22vw;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,164,105,.18),transparent 62%);filter:blur(24px)}
+  .hero .wrap{position:relative;z-index:2;width:100%}
+  .hero h1{font-size:clamp(78px,17vw,240px);letter-spacing:-.02em;margin:24px 0;position:relative}
+  .hero h1 .ln{display:inline-block;overflow:hidden;vertical-align:bottom}
+  .hero h1 .ln span{display:inline-block;transform:translateY(105%)}
+  .hero h1 em{font-style:italic;color:var(--gold)}
+  .hero .lead{max-width:460px;font-size:19px;line-height:1.75;color:var(--cream-dim);font-weight:300}
+  .hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-top:56px;flex-wrap:wrap}
+  .hero-meta{display:flex;gap:54px;flex-wrap:wrap}
+  .hero-meta div span{display:block;font-family:var(--serif);font-size:42px;color:var(--gold);line-height:1}
+  .hero-meta div small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-faint);margin-top:6px;display:block}
+  .scrollcue{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--cream-faint);text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .scrollcue i{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);animation:drop 2.4s infinite}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}
+    55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* MARQUEE */
+  .marquee{border-top:1px solid rgba(201,164,105,.16);border-bottom:1px solid rgba(201,164,105,.16);
+    padding:22px 0;overflow:hidden;white-space:nowrap;background:rgba(42,14,18,.25)}
+  .marquee .track{display:inline-flex;gap:56px;animation:scroll 32s linear infinite;will-change:transform}
+  .marquee span{font-family:var(--serif);font-size:26px;font-style:italic;color:var(--cream-dim);display:inline-flex;align-items:center;gap:56px}
+  .marquee span::after{content:"✦";color:var(--gold);font-style:normal;font-size:14px}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(40px)}
+  .split .word{display:inline-block;overflow:hidden;vertical-align:top}
+  .split .word i{display:inline-block;font-style:inherit;transform:translateY(110%)}
+
+  /* section head */
+  .sec-num{font-family:var(--serif);font-size:14px;color:var(--gold);letter-spacing:.1em}
+
+  /* STORY */
+  .story{padding:170px 0;position:relative}
+  .story .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:96px;align-items:center}
+  @media(max-width:900px){.story .grid{grid-template-columns:1fr;gap:52px}}
+  .story h2{font-size:clamp(42px,6vw,84px);margin:24px 0 32px;letter-spacing:-.01em}
+  .story h2 em{font-style:italic;color:var(--gold)}
+  .story p{color:var(--cream-dim);font-size:17px;line-height:1.95;margin-bottom:22px;max-width:48ch;font-weight:300}
+  .story .sign{margin-top:36px;font-family:var(--serif);font-size:34px;font-style:italic;color:var(--gold-soft);transform:rotate(-3deg);display:inline-block}
+  .story-visual{aspect-ratio:3/4;border-radius:3px;position:relative;overflow:hidden;
+    background:url(assets/img/cellar.jpg) center/cover;border:1px solid rgba(201,164,105,.22)}
+  .story-visual::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(20,10,11,.15),rgba(20,10,11,.3) 55%,rgba(20,10,11,.85))}
+  .story-visual .vmark{position:absolute;bottom:24px;left:28px;z-index:2;font-family:var(--serif);
+    font-size:130px;color:rgba(244,236,221,.92);line-height:.72}
+  .story-visual .vsub{position:absolute;bottom:34px;right:26px;z-index:2;writing-mode:vertical-rl;
+    letter-spacing:.42em;text-transform:uppercase;font-size:11px;color:var(--gold)}
+  .story-visual .vframe{position:absolute;inset:16px;border:1px solid rgba(244,236,221,.2);z-index:2;pointer-events:none}
+
+  /* PROCESS timeline */
+  .process{padding:130px 0;background:linear-gradient(180deg,transparent,rgba(61,22,32,.28),transparent)}
+  .process .sec-head{max-width:640px;margin-bottom:80px}
+  .process .sec-head h2{font-size:clamp(38px,5.6vw,76px);margin-top:18px}
+  .process .sec-head h2 em{font-style:italic;color:var(--gold)}
+  .steps{position:relative}
+  .steps::before{content:"";position:absolute;left:0;top:0;width:100%;height:1px;background:rgba(201,164,105,.18)}
+  .steps .line{position:absolute;left:0;top:0;height:1px;width:0;background:var(--gold);z-index:1}
+  .steps .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:36px;padding-top:44px}
+  @media(max-width:900px){.steps .grid{grid-template-columns:1fr 1fr;gap:48px 32px}}
+  @media(max-width:560px){.steps .grid{grid-template-columns:1fr}}
+  .step{position:relative}
+  .step .no{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.2em}
+  .step h3{font-size:27px;margin:16px 0 12px}
+  .step p{color:var(--cream-dim);font-size:15px;line-height:1.8;font-weight:300}
+  .step .dot{position:absolute;top:-49px;left:0;width:9px;height:9px;border-radius:50%;background:var(--gold);
+    box-shadow:0 0 0 5px rgba(201,164,105,.14)}
+
+  /* TERROIR — light editorial break */
+  .terroir{padding:150px 0;background:var(--parchment);color:var(--parchment-ink);position:relative}
+  .terroir .eyebrow{color:#8a5a2b}.terroir .eyebrow::before,.terroir .eyebrow::after{background:#8a5a2b}
+  .terroir .grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  @media(max-width:900px){.terroir .grid{grid-template-columns:1fr;gap:48px}}
+  .terroir h2{font-size:clamp(40px,5.6vw,78px);margin:22px 0 28px;color:#241512;letter-spacing:-.01em}
+  .terroir h2 em{font-style:italic;color:#8a5a2b}
+  .terroir p{font-size:17px;line-height:1.9;color:#5b473c;max-width:46ch;margin-bottom:20px;font-weight:400}
+  .terroir-facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(36,21,18,.14);border:1px solid rgba(36,21,18,.14)}
+  .fact{background:var(--parchment);padding:32px 28px}
+  .fact span{font-family:var(--serif);font-size:46px;color:#8a5a2b;display:block;line-height:1}
+  .fact small{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7a6255;margin-top:8px;display:block}
+  .terroir-map{aspect-ratio:1/1;position:relative}
+  .terroir-map svg{width:100%;height:100%;overflow:visible}
+
+  /* COLLECTION */
+  .collection{padding:150px 0}
+  .sec-head.center{text-align:center;margin-bottom:74px}
+  .sec-head.center h2{font-size:clamp(40px,6vw,80px);margin-top:16px}
+  .sec-head.center h2 em{font-style:italic;color:var(--gold)}
+  .bottles{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media(max-width:900px){.bottles{grid-template-columns:1fr;max-width:440px;margin:0 auto}}
+  .bottle{border:1px solid rgba(201,164,105,.2);border-radius:4px;padding:0 0 40px;
+    background:linear-gradient(180deg,rgba(42,14,18,.5),rgba(20,10,11,.4));transition:.6s var(--ease);position:relative;overflow:hidden}
+  .bottle::before{content:"";position:absolute;left:0;top:0;height:100%;width:2px;background:var(--gold);transform:scaleY(0);transform-origin:top;transition:.6s var(--ease)}
+  .bottle:hover{transform:translateY(-10px);border-color:rgba(201,164,105,.5)}
+  .bottle:hover::before{transform:scaleY(1)}
+  .bottle-img{height:260px;overflow:hidden;position:relative}
+  .bottle-img img{width:100%;height:100%;object-fit:cover;transition:1s var(--ease)}
+  .bottle-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,10,11,.9))}
+  .bottle:hover .bottle-img img{transform:scale(1.08)}
+  .bottle .inner{padding:0 32px}
+  .bottle .yr{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.1em;margin-top:26px;display:block}
+  .bottle h3{font-size:34px;margin:12px 0 8px}
+  .bottle .type{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--cream-faint)}
+  .bottle .notes{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+  .bottle .notes span{font-size:11px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(201,164,105,.26);border-radius:30px;color:var(--cream-dim)}
+  .bottle p{color:var(--cream-dim);font-size:15px;line-height:1.8;font-weight:300}
+  .bottle .foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:26px}
+  .bottle .price{font-family:var(--serif);font-size:28px;color:var(--cream)}
+  .bottle .abv{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-faint)}
+
+  /* SOMMELIER */
+  .somm{padding:150px 0}
+  .somm-card{border:1px solid rgba(201,164,105,.24);border-radius:6px;overflow:hidden;
+    background:linear-gradient(160deg,rgba(61,22,32,.5),rgba(20,10,11,.7));display:grid;grid-template-columns:1fr 1fr}
+  @media(max-width:900px){.somm-card{grid-template-columns:1fr}}
+  .somm-left{padding:60px 54px;border-right:1px solid rgba(201,164,105,.16)}
+  @media(max-width:900px){.somm-left{border-right:none;border-bottom:1px solid rgba(201,164,105,.16)}}
+  .somm-left h2{font-size:clamp(34px,4.4vw,56px);margin:16px 0 14px}
+  .somm-left h2 em{font-style:italic;color:var(--gold)}
+  .somm-left>p{color:var(--cream-dim);font-size:16px;line-height:1.8;max-width:40ch;font-weight:300}
+  .q{margin-top:32px}
+  .q label{display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .opts{display:flex;flex-wrap:wrap;gap:10px}
+  .opt{padding:11px 20px;border:1px solid rgba(201,164,105,.3);border-radius:40px;font-size:14px;
+    cursor:pointer;transition:.3s;color:var(--cream-dim);background:transparent;font-family:var(--sans)}
+  .opt:hover{border-color:var(--gold);color:var(--cream)}
+  .opt.active{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+  .somm-right{padding:60px 54px;display:flex;flex-direction:column;justify-content:center;position:relative;min-height:460px;
+    background:radial-gradient(80% 80% at 80% 20%,rgba(201,164,105,.08),transparent 60%)}
+  .somm-result{opacity:0;transform:translateY(16px);transition:.6s var(--ease)}
+  .somm-result.show{opacity:1;transform:none}
+  .somm-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    color:var(--cream-faint);font-family:var(--serif);font-size:23px;font-style:italic;padding:40px;transition:.4s;gap:18px}
+  .somm-empty svg{width:52px;height:52px;opacity:.5}
+  .somm-empty.hide{opacity:0;pointer-events:none}
+  .res-tag{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+  .res-name{font-family:var(--serif);font-size:clamp(44px,6vw,68px);margin:14px 0 6px}
+  .res-type{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream-faint)}
+  .res-desc{color:var(--cream-dim);line-height:1.8;font-size:16px;max-width:38ch;margin-top:18px;font-weight:300}
+  .res-note{margin-top:30px;display:flex;gap:30px;flex-wrap:wrap}
+  .res-note b{display:block;font-family:var(--serif);font-size:24px;color:var(--cream);font-weight:500}
+  .res-note small{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-faint);margin-top:4px;display:block}
+
+  /* NUMBERS */
+  .nums{padding:110px 0;border-top:1px solid rgba(201,164,105,.14);border-bottom:1px solid rgba(201,164,105,.14)}
+  .nums .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center}
+  @media(max-width:760px){.nums .grid{grid-template-columns:1fr 1fr;gap:56px 20px}}
+  .num span{font-family:var(--serif);font-size:clamp(50px,7vw,92px);color:var(--gold);display:block;line-height:1}
+  .num small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-faint);margin-top:10px;display:block}
+
+  /* PRESS */
+  .press{padding:140px 0;text-align:center}
+  .press .quote{font-family:var(--serif);font-size:clamp(28px,4.4vw,52px);line-height:1.3;max-width:16ch;margin:0 auto 40px;font-style:italic}
+  .press .quote em{color:var(--gold);font-style:italic}
+  .press-logos{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;opacity:.7}
+  .press-logos span{font-family:var(--serif);font-size:22px;letter-spacing:.14em;color:var(--cream-dim)}
+  .press-logos span b{color:var(--gold);font-weight:500}
+
+  /* VISIT */
+  .visit{padding:150px 0;position:relative;
+    background:radial-gradient(80% 100% at 50% 0%, rgba(61,22,32,.5), transparent 60%)}
+  .visit .grid{display:grid;grid-template-columns:1fr .85fr;gap:80px;align-items:center}
+  @media(max-width:900px){.visit .grid{grid-template-columns:1fr;gap:52px}}
+  .visit h2{font-size:clamp(42px,7vw,96px);letter-spacing:-.01em}
+  .visit h2 em{font-style:italic;color:var(--gold)}
+  .visit p{color:var(--cream-dim);margin:26px 0 8px;max-width:44ch;font-size:17px;line-height:1.85;font-weight:300}
+  .visit-menu{border:1px solid rgba(201,164,105,.24);border-radius:6px;padding:12px 34px;
+    background:linear-gradient(160deg,rgba(42,14,18,.55),rgba(20,10,11,.4))}
+  .visit-menu .row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+    padding:22px 0;border-bottom:1px dashed rgba(201,164,105,.2)}
+  .visit-menu .row:last-child{border-bottom:none}
+  .visit-menu .row h4{font-size:23px;font-weight:500}
+  .visit-menu .row .d{font-size:13px;color:var(--cream-faint);margin-top:4px}
+  .visit-menu .row .p{font-family:var(--serif);font-size:24px;color:var(--gold);white-space:nowrap}
+  .btn{display:inline-flex;align-items:center;gap:12px;padding:18px 46px;border:1px solid var(--gold);color:var(--cream);border-radius:40px;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;transition:.4s;position:relative;overflow:hidden;z-index:1;margin-top:34px;cursor:none}
+  .btn::before{content:"";position:absolute;inset:0;background:var(--gold);z-index:-1;transform:translateY(101%);transition:.5s var(--ease)}
+  .btn:hover{color:var(--ink)}.btn:hover::before{transform:translateY(0)}
+
+  footer{padding:70px 0 54px;border-top:1px solid rgba(201,164,105,.14);position:relative}
+  footer .grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;align-items:flex-end}
+  footer .brand{font-size:30px;margin-bottom:16px}
+  footer .fcol h5{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  footer .fcol p,footer .fcol a{color:var(--cream-dim);font-size:14px;line-height:2;font-weight:300}
+  footer .copy{margin-top:50px;text-align:center;color:var(--cream-faint);font-size:12px;letter-spacing:.08em}
+
+  .backlink{position:fixed;left:24px;bottom:24px;z-index:250;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--cream-dim);background:rgba(20,10,11,.7);backdrop-filter:blur(8px);padding:11px 18px;border-radius:30px;
+    border:1px solid rgba(201,164,105,.2);transition:.3s;cursor:none}
+  .backlink:hover{color:var(--gold);border-color:var(--gold)}
+  @media(max-width:860px){.backlink{left:14px;bottom:14px}}
+</style>
+</head>
+<body>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+<div class="progress" id="progress"></div>
+<a class="backlink" href="https://github.com/mkzvcode/mkzv-projects" target="_blank" rel="noopener" data-hov>← все проекты</a>
+
+<nav id="nav">
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3c0 5-4 6-4 10a4 4 0 0 0 8 0c0-4-4-5-4-10Z" stroke="var(--gold)"/></svg>
+      TERRA<b>.</b>
+    </div>
+    <div class="navlinks">
+      <a href="#story" data-hov>Философия</a>
+      <a href="#process" data-hov>Как мы делаем</a>
+      <a href="#collection" data-hov>Коллекция</a>
+      <a href="#somm" data-hov>Сомелье</a>
+    </div>
+    <a href="#visit" class="nav-cta" data-hov>Визит</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-photo" id="heroPhoto"></div>
+  <div class="hero-glow"></div>
+  <div class="wrap">
+    <p class="eyebrow reveal">Семейная винодельня · долина южного склона · с 1962</p>
+    <h1><span class="ln"><span>Terra</span></span><em>.</em></h1>
+    <div class="hero-foot">
+      <p class="lead reveal">Вино, в котором слышно землю. Мы растим лозу на южных склонах и не торопим то, что должно созреть само.</p>
+      <div class="hero-meta">
+        <div class="reveal"><span>62</span><small>года традиции</small></div>
+        <div class="reveal"><span>18 га</span><small>виноградников</small></div>
+        <div class="reveal"><span>9</span><small>сортов в линейке</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="scrollcue" style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:3">листайте<i></i></div>
+</header>
+
+<div class="marquee">
+  <div class="track">
+    <span>Terroir</span><span>Ручной сбор</span><span>Выдержка в дубе</span><span>Южный склон</span><span>Малые партии</span><span>Дегустация на закате</span>
+    <span>Terroir</span><span>Ручной сбор</span><span>Выдержка в дубе</span><span>Южный склон</span><span>Малые партии</span><span>Дегустация на закате</span>
+  </div>
+</div>
+
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="eyebrow reveal">01 — Философия</p>
+        <h2 class="reveal">От лозы<br/>до <em>бокала</em>.</h2>
+        <p class="reveal">Каждая бутылка Terra — это один сезон, прожитый честно. Мы не добавляем лишнего и не прячем характер вина за сахаром.</p>
+        <p class="reveal">Сбор — только вручную, на рассвете, когда ягода прохладная. Так в вино попадает свежесть, а не усталость полуденного солнца.</p>
+        <p class="reveal">Выдержка в дубе — от 12 до 30 месяцев. Мы ждём момент, а не дату в календаре.</p>
+        <span class="sign reveal">— семья Terra</span>
+      </div>
+      <div class="story-visual reveal">
+        <div class="vframe"></div>
+        <div class="vmark">T.</div>
+        <div class="vsub">Terroir · Sud</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow reveal">02 — Ремесло</p>
+      <h2 class="reveal">Четыре шага,<br/>которые нельзя <em>ускорить</em>.</h2>
+    </div>
+    <div class="steps">
+      <div class="line" id="processLine"></div>
+      <div class="grid">
+        <div class="step reveal"><div class="dot"></div><div class="no">01</div><h3>Сбор вручную</h3><p>На рассвете, гроздь за гроздью. Отбираем только зрелую ягоду — на склоне не бывает конвейера.</p></div>
+        <div class="step reveal"><div class="dot"></div><div class="no">02</div><h3>Мягкий отжим</h3><p>Гравитационный пресс без спешки. Сок идёт сам, сохраняя тонкость аромата и мягкость танина.</p></div>
+        <div class="step reveal"><div class="dot"></div><div class="no">03</div><h3>Ферментация</h3><p>Дикие дрожжи, температурный контроль, ноль лишней химии. Характер рождается здесь.</p></div>
+        <div class="step reveal"><div class="dot"></div><div class="no">04</div><h3>Выдержка в дубе</h3><p>12–30 месяцев во французском дубе, затем отдых в бутылке. Мы выпускаем вино, когда оно готово.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="terroir">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="eyebrow reveal">03 — Терруар</p>
+        <h2 class="reveal">Склон, солнце<br/>и <em>известняк</em>.</h2>
+        <p class="reveal">Наши 18 гектаров смотрят на юго-запад. Днём лоза берёт солнце, ночью прохлада с реки замедляет созревание — так рождается баланс сахара и кислоты.</p>
+        <p class="reveal">Под тонким слоем глины — известняковая порода. Она держит воду в засуху и отдаёт вину ту самую минеральность, которую нельзя подделать.</p>
+        <div class="terroir-facts reveal">
+          <div class="fact"><span>240</span><small>солнечных дней</small></div>
+          <div class="fact"><span>320 м</span><small>над уровнем моря</small></div>
+          <div class="fact"><span>ЮЗ</span><small>экспозиция склона</small></div>
+          <div class="fact"><span>1962</span><small>первая посадка</small></div>
+        </div>
+      </div>
+      <div class="terroir-map reveal">
+        <svg viewBox="0 0 400 400" fill="none" aria-hidden="true">
+          <defs>
+            <radialGradient id="sun" cx="72%" cy="24%" r="40%">
+              <stop offset="0%" stop-color="#e6b96a" stop-opacity=".7"/><stop offset="100%" stop-color="#e6b96a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect x="0" y="0" width="400" height="400" fill="url(#sun)"/>
+          <circle cx="300" cy="96" r="30" fill="none" stroke="#8a5a2b" stroke-width="1.2"/>
+          <g stroke="#8a5a2b" stroke-width="1.4" opacity=".85">
+            <path class="row-line" d="M40 300 C 130 250, 270 250, 360 200"/>
+            <path class="row-line" d="M40 330 C 130 282, 270 282, 360 232"/>
+            <path class="row-line" d="M40 360 C 130 314, 270 314, 360 264"/>
+            <path class="row-line" d="M40 270 C 130 218, 270 218, 360 168"/>
+          </g>
+          <g fill="#8a5a2b">
+            <circle cx="120" cy="262" r="3"/><circle cx="200" cy="252" r="3"/><circle cx="280" cy="232" r="3"/>
+            <circle cx="160" cy="294" r="3"/><circle cx="240" cy="278" r="3"/>
+          </g>
+          <text x="46" y="386" font-family="Cormorant Garamond, serif" font-size="15" fill="#7a6255" letter-spacing="2">TERRA · PARCEL SUD</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="collection" id="collection">
+  <div class="wrap">
+    <div class="sec-head center">
+      <p class="eyebrow center reveal">04 — Коллекция</p>
+      <h2 class="reveal">Три <em>характера</em></h2>
+    </div>
+    <div class="bottles">
+      <article class="bottle reveal" data-hov>
+        <div class="bottle-img"><img src="assets/img/wine-red.jpg" alt="Красное вино Rubino" loading="lazy"/></div>
+        <div class="inner">
+          <span class="yr">MMXIX · 2019</span>
+          <h3>Rubino</h3>
+          <div class="type">Красное · сухое</div>
+          <div class="notes"><span>Вишня</span><span>Табак</span><span>Тёмный шоколад</span></div>
+          <p>Плотное, глубокое, с бархатными танинами и долгим послевкусием. Вино для медленного вечера.</p>
+          <div class="foot"><div class="price">4 200 ₽</div><div class="abv">14% · 0.75</div></div>
+        </div>
+      </article>
+      <article class="bottle reveal" data-hov>
+        <div class="bottle-img"><img src="assets/img/wine-white.jpg" alt="Белое вино Bianco" loading="lazy"/></div>
+        <div class="inner">
+          <span class="yr">MMXXI · 2021</span>
+          <h3>Bianco</h3>
+          <div class="type">Белое · полусухое</div>
+          <div class="notes"><span>Груша</span><span>Белый цвет</span><span>Минеральность</span></div>
+          <p>Свежесть груши и белых цветов, лёгкая минеральность склона. Идеально прохладным вечером.</p>
+          <div class="foot"><div class="price">3 400 ₽</div><div class="abv">12.5% · 0.75</div></div>
+        </div>
+      </article>
+      <article class="bottle reveal" data-hov>
+        <div class="bottle-img"><img src="assets/img/wine-rose.jpg" alt="Розовое вино Dolce" loading="lazy"/></div>
+        <div class="inner">
+          <span class="yr">MMXX · 2020</span>
+          <h3>Dolce</h3>
+          <div class="type">Розовое · сладкое</div>
+          <div class="notes"><span>Мёд</span><span>Абрикос</span><span>Лепестки роз</span></div>
+          <p>Мёд, абрикос и лепестки роз. Десертное вино, которое само по себе — десерт.</p>
+          <div class="foot"><div class="price">3 900 ₽</div><div class="abv">11% · 0.5</div></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="somm" id="somm">
+  <div class="wrap">
+    <div class="somm-card reveal">
+      <div class="somm-left">
+        <p class="eyebrow">05 — Виртуальный сомелье</p>
+        <h2>Подберём<br/>под <em>вечер</em>.</h2>
+        <p>Ответьте на два вопроса — предложим вино из нашей коллекции. Без снобизма, честно по вкусу.</p>
+        <div class="q">
+          <label>Какой вкус ближе?</label>
+          <div class="opts" data-group="taste">
+            <button class="opt" data-val="dry" data-hov>Сухое</button>
+            <button class="opt" data-val="semi" data-hov>Полусухое</button>
+            <button class="opt" data-val="sweet" data-hov>Сладкое</button>
+          </div>
+        </div>
+        <div class="q">
+          <label>К чему подаёте?</label>
+          <div class="opts" data-group="dish">
+            <button class="opt" data-val="meat" data-hov>Мясо</button>
+            <button class="opt" data-val="fish" data-hov>Рыба и сыр</button>
+            <button class="opt" data-val="dessert" data-hov>Десерт</button>
+          </div>
+        </div>
+      </div>
+      <div class="somm-right">
+        <div class="somm-empty" id="sommEmpty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1"><path d="M12 3c0 5-4 6-4 10a4 4 0 0 0 8 0c0-4-4-5-4-10Z"/></svg>
+          Выберите вкус и блюдо —<br/>и мы нальём подходящее.
+        </div>
+        <div class="somm-result" id="sommResult">
+          <div class="res-tag" id="resTag">Наш выбор</div>
+          <div class="res-name" id="resName">Rubino</div>
+          <div class="res-type" id="resType">Красное · сухое</div>
+          <div class="res-desc" id="resDesc"></div>
+          <div class="res-note">
+            <div><b id="resYear">2019</b><small>урожай</small></div>
+            <div><b id="resPrice">4 200 ₽</b><small>бутылка 0.75</small></div>
+            <div><b id="resPair">Мясо</b><small>идеальная пара</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nums">
+  <div class="wrap">
+    <div class="grid">
+      <div class="num reveal"><span data-to="62">0</span><small>года истории</small></div>
+      <div class="num reveal"><span data-to="18">0</span><small>гектаров лозы</small></div>
+      <div class="num reveal"><span data-to="240">0</span><small>дней солнца в год</small></div>
+      <div class="num reveal"><span data-to="30">0</span><small>месяцев выдержки</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="press">
+  <div class="wrap">
+    <p class="eyebrow center reveal" style="justify-content:center;margin-bottom:34px">Пресса о нас</p>
+    <blockquote class="quote reveal">«Редкое вино, где чувствуется <em>рука семьи</em>, а не завод».</blockquote>
+    <div class="press-logos reveal">
+      <span>Decanter<b>.</b></span><span>Simple Wine</span><span>Гастрономъ</span><span>Wine<b>&</b>Spirits</span>
+    </div>
+  </div>
+</section>
+
+<section class="visit" id="visit">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="eyebrow reveal">06 — Визит</p>
+        <h2 class="reveal">Дегустация<br/>на <em>закате</em>.</h2>
+        <p class="reveal">Экскурсия по погребам, шесть вин и ужин на террасе с видом на виноградники. По записи, малыми группами до восьми человек.</p>
+        <a href="#" class="btn reveal" data-hov>Забронировать визит →</a>
+      </div>
+      <div class="visit-menu reveal">
+        <div class="row"><div><h4>Погреба</h4><div class="d">45 минут · история и бочки</div></div><div class="p">включено</div></div>
+        <div class="row"><div><h4>Дегустация 6 вин</h4><div class="d">от Bianco до Rubino Riserva</div></div><div class="p">2 500 ₽</div></div>
+        <div class="row"><div><h4>Ужин на террасе</h4><div class="d">сет из 4 блюд под вино</div></div><div class="p">4 800 ₽</div></div>
+        <div class="row"><div><h4>Ночь в поместье</h4><div class="d">номер с видом на склон</div></div><div class="p">по запросу</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="brand">TERRA<b style="color:var(--gold)">.</b></div>
+        <p style="color:var(--cream-dim);max-width:32ch;font-weight:300;line-height:1.8">Семейная винодельня в долине южного склона. От лозы до бокала — с 1962 года.</p>
+      </div>
+      <div class="fcol">
+        <h5>Поместье</h5>
+        <p>Долина, южный склон<br/>Открыто ср–вс, 11:00–20:00<br/>По записи</p>
+      </div>
+      <div class="fcol">
+        <h5>Связь</h5>
+        <a href="#" data-hov>+7 000 000-00-00</a><br/>
+        <a href="#" data-hov>hello@terra-wine.ru</a><br/>
+        <a href="#" data-hov>Instagram</a> · <a href="#" data-hov>Telegram</a>
+      </div>
+    </div>
+    <p class="copy">Работа-концепт © MKZV · дизайн и фронтенд · 18+ · пейте ответственно</p>
+  </div>
+</footer>
+
+<script src="assets/js/gsap.min.js"></script>
+<script src="assets/js/ScrollTrigger.min.js"></script>
+<script src="assets/js/lenis.min.js"></script>
+<script>
+  // ---------- smooth scroll ----------
+  const lenis = new Lenis({lerp:.09,wheelMultiplier:1});
+  function raf(t){lenis.raf(t);requestAnimationFrame(raf)} requestAnimationFrame(raf);
+  gsap.registerPlugin(ScrollTrigger);
+  lenis.on('scroll', ScrollTrigger.update);
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const t=a.getAttribute('href'); if(t.length<2)return;
+    e.preventDefault();lenis.scrollTo(t,{offset:-40});
+  }));
+
+  // ---------- progress + nav ----------
+  const nav=document.getElementById('nav'), progress=document.getElementById('progress');
+  lenis.on('scroll',({scroll})=>{
+    nav.classList.toggle('scrolled',scroll>40);
+    const h=document.documentElement.scrollHeight-innerHeight;
+    progress.style.width=(scroll/h*100)+'%';
+  });
+
+  // ---------- custom cursor ----------
+  const cur=document.querySelector('.cursor'), ring=document.querySelector('.cursor-ring');
+  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+  (function ring_(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ring_)})();
+  document.querySelectorAll('[data-hov]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+  });
+
+  // ---------- hero intro ----------
+  const tl=gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.to('.hero h1 .ln span',{y:0,duration:1.1,stagger:.1,delay:.15})
+    .to('.hero .reveal',{opacity:1,y:0,duration:1,stagger:.1},'-=.7');
+
+  // hero parallax
+  gsap.to('#heroPhoto',{yPercent:16,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+
+  // ---------- generic reveals ----------
+  gsap.utils.toArray('.reveal:not(.hero .reveal)').forEach(el=>{
+    gsap.to(el,{opacity:1,y:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}});
+  });
+
+  // process line draw
+  ScrollTrigger.create({trigger:'.steps',start:'top 70%',end:'bottom 70%',scrub:.6,
+    onUpdate:s=>document.getElementById('processLine').style.width=(s.progress*100)+'%'});
+
+  // vineyard rows draw
+  gsap.utils.toArray('.row-line').forEach((p,i)=>{
+    const len=p.getTotalLength(); p.style.strokeDasharray=len; p.style.strokeDashoffset=len;
+    gsap.to(p,{strokeDashoffset:0,duration:1.6,ease:'power2.out',delay:i*.15,
+      scrollTrigger:{trigger:'.terroir-map',start:'top 80%'}});
+  });
+
+  // counters
+  document.querySelectorAll('.num span').forEach(el=>{
+    const to=+el.dataset.to;
+    ScrollTrigger.create({trigger:el,start:'top 90%',once:true,onEnter:()=>{
+      const o={v:0};gsap.to(o,{v:to,duration:1.8,ease:'power2.out',onUpdate:()=>el.textContent=Math.round(o.v)});
+    }});
+  });
+
+  // ---------- magnetic buttons ----------
+  document.querySelectorAll('.btn,.nav-cta').forEach(b=>{
+    b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();
+      gsap.to(b,{x:(e.clientX-r.left-r.width/2)*.3,y:(e.clientY-r.top-r.height/2)*.4,duration:.4});});
+    b.addEventListener('mouseleave',()=>gsap.to(b,{x:0,y:0,duration:.5,ease:'elastic.out(1,.4)'}));
+  });
+
+  // ---------- SOMMELIER ----------
+  const wines={
+    rubino:{name:'Rubino',type:'Красное · сухое',year:'2019',price:'4 200 ₽',pair:'Мясо',desc:'Насыщенное красное с вишней и тёмным шоколадом. Раскрывает мясо и держит вечер до последнего тоста.'},
+    bianco:{name:'Bianco',type:'Белое · полусухое',year:'2021',price:'3 400 ₽',pair:'Рыба и сыр',desc:'Свежее белое с грушей и минеральностью склона. Лёгкость, которая любит рыбу, сыр и разговоры.'},
+    dolce:{name:'Dolce',type:'Розовое · сладкое',year:'2020',price:'3 900 ₽',pair:'Десерт',desc:'Медовое сладкое с абрикосом и розой. Само по себе десерт — и лучший финал для десерта.'},
+    rosato:{name:'Rosato',type:'Розовое · полусухое',year:'2022',price:'3 100 ₽',pair:'Всё сразу',desc:'Полусухое розовое, ягодное и питкое. Универсал: одинаково хорош с рыбой, сыром и просто так.'}
+  };
+  const state={taste:null,dish:null};
+  const pick=()=>{
+    if(state.taste==='sweet') return 'dolce';
+    if(state.taste==='dry')  return state.dish==='fish'?'bianco':'rubino';
+    if(state.taste==='semi') return state.dish==='dessert'?'dolce':'rosato';
+    if(state.dish==='meat') return 'rubino';
+    if(state.dish==='fish') return 'bianco';
+    if(state.dish==='dessert') return 'dolce';
+    return null;
+  };
+  const resEl=document.getElementById('sommResult'), emptyEl=document.getElementById('sommEmpty');
+  const render=()=>{
+    const key=pick(); if(!key) return; const w=wines[key];
+    resName.textContent=w.name; resType.textContent=w.type; resDesc.textContent=w.desc;
+    resYear.textContent=w.year; resPrice.textContent=w.price; resPair.textContent=w.pair;
+    emptyEl.classList.add('hide'); resEl.classList.add('show');
+    gsap.fromTo(resEl,{scale:.98},{scale:1,duration:.4,ease:'back.out(2)'});
+  };
+  document.querySelectorAll('.opts').forEach(group=>{
+    group.addEventListener('click',e=>{
+      const btn=e.target.closest('.opt'); if(!btn)return;
+      group.querySelectorAll('.opt').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active'); state[group.dataset.group]=btn.dataset.val;
+      if(state.taste||state.dish) render();
+    });
+  });
+</script>
+</body>
+</html>

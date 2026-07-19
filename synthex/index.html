@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Synthex — AI-ассистент, который берёт рутину на себя</title>
+<meta name="description" content="Synthex — AI-ассистент для команд: разбирает почту, собирает отчёты, отвечает клиентам 24/7 и подключается к вашим сервисам. Настройка за 5 минут, без кода." />
+<meta name="robots" content="noindex, follow" />
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
+<script src="assets/js/tailwind.js"></script>
+<script>
+tailwind.config={darkMode:'class',theme:{extend:{
+  fontFamily:{display:['"Bricolage Grotesque"','sans-serif'],body:['Manrope','sans-serif']},
+  colors:{brand:{DEFAULT:'#5b3df5',soft:'#8b6dff'},lime:'#c6f24e',ink:'#0a0a12'},
+}}}
+</script>
+<style>
+  html{scroll-behavior:smooth}
+  body{font-family:'Manrope',sans-serif}
+  .font-display{font-family:'Bricolage Grotesque',sans-serif}
+  ::selection{background:#c6f24e;color:#0a0a12}
+  .mesh-dark{background:
+    radial-gradient(50% 50% at 15% 10%,rgba(91,61,245,.35),transparent 60%),
+    radial-gradient(45% 45% at 85% 15%,rgba(198,242,78,.16),transparent 60%),
+    radial-gradient(50% 50% at 70% 90%,rgba(139,109,255,.25),transparent 60%),#0a0a12}
+  .mesh-themed{background:
+    radial-gradient(50% 50% at 15% 10%,rgba(91,61,245,.18),transparent 60%),
+    radial-gradient(45% 45% at 85% 15%,rgba(198,242,78,.28),transparent 60%),
+    radial-gradient(50% 50% at 70% 90%,rgba(139,109,255,.15),transparent 60%),#f4f3ef}
+  .dark .mesh-themed{background:
+    radial-gradient(50% 50% at 15% 10%,rgba(91,61,245,.35),transparent 60%),
+    radial-gradient(45% 45% at 85% 15%,rgba(198,242,78,.16),transparent 60%),
+    radial-gradient(50% 50% at 70% 90%,rgba(139,109,255,.25),transparent 60%),#0a0a12}
+  .mesh-themed{background-size:160% 160%;animation:meshmove 20s ease-in-out infinite alternate}
+  @keyframes meshmove{to{background-position:100% 100%}}
+  .grid-fade{background-image:linear-gradient(rgba(128,128,160,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(128,128,160,.09) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(70% 60% at 50% 40%,#000,transparent);mask-image:radial-gradient(70% 60% at 50% 40%,#000,transparent)}
+  .reveal{opacity:0;transform:translateY(28px);transition:.85s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .shine{background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.5) 50%,transparent 70%);background-size:200% 100%;animation:shine 3s linear infinite}
+  @keyframes shine{to{background-position:-200% 0}}
+  .acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .float-card{animation:fl 7s ease-in-out infinite}
+  @keyframes fl{50%{transform:translateY(-14px) rotate(-1deg)}}
+  /* rotating hero word */
+  .rot{display:inline-grid;vertical-align:top}
+  .rot>span{grid-area:1/1;opacity:0;transform:translateY(40%);transition:.5s cubic-bezier(.2,.7,.2,1);background:linear-gradient(90deg,#5b3df5,#8b6dff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .dark .rot>span{background:linear-gradient(90deg,#8b6dff,#c6f24e);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .rot>span.on{opacity:1;transform:none}
+  .rot>span.off{opacity:0;transform:translateY(-40%)}
+  /* integrations marquee */
+  .intg-track{display:flex;gap:14px;width:max-content;animation:mq 26s linear infinite}
+  @keyframes mq{to{transform:translateX(-50%)}}
+</style>
+</head>
+<body class="bg-white dark:bg-ink text-slate-800 dark:text-slate-200 transition-colors duration-500 overflow-x-hidden">
+
+<a href="https://github.com/mkzvcode/mkzv-projects" target="_blank" rel="noopener" class="fixed left-5 bottom-5 z-50 text-xs tracking-wider uppercase px-4 py-2.5 rounded-full border border-slate-300 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur hover:border-brand transition">← все проекты</a>
+
+<!-- NAV -->
+<nav id="nav" class="fixed top-0 inset-x-0 z-40 transition-all">
+  <div class="max-w-6xl mx-auto px-6 flex items-center justify-between py-5">
+    <div class="font-display font-800 text-xl flex items-center gap-2">
+      <span class="w-7 h-7 rounded-lg bg-brand grid place-items-center text-white text-sm">✦</span>Synthex
+    </div>
+    <div class="hidden md:flex items-center gap-8 text-sm">
+      <a href="#how" class="hover:text-brand transition">Как работает</a>
+      <a href="#features" class="hover:text-brand transition">Возможности</a>
+      <a href="#pricing" class="hover:text-brand transition">Цены</a>
+      <a href="#faq" class="hover:text-brand transition">Вопросы</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="themeBtn" class="w-10 h-10 rounded-full border border-slate-300 dark:border-white/15 grid place-items-center hover:border-brand transition" aria-label="Тема">
+        <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+      </button>
+      <a href="#pricing" class="text-sm font-600 bg-brand text-white px-5 py-2.5 rounded-full hover:bg-brand-soft transition">Начать</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="relative min-h-screen mesh-themed overflow-hidden pt-36 pb-20" id="topHero">
+  <div class="absolute inset-0 grid-fade"></div>
+  <div class="relative max-w-6xl mx-auto px-6 text-center">
+    <div class="reveal inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-300 dark:border-white/15 bg-white/60 dark:bg-white/5 text-sm text-brand dark:text-lime mb-8 backdrop-blur">
+      <span class="w-2 h-2 rounded-full bg-brand dark:bg-lime animate-pulse"></span> Synthex 3.0 — теперь с автопилотом
+    </div>
+    <h1 class="reveal font-display font-800 text-slate-900 dark:text-white leading-[0.95] tracking-tight text-5xl sm:text-6xl lg:text-8xl">
+      <span class="rot" id="rot" aria-hidden="true">
+        <span class="on">Рутина</span><span>Почта</span><span>Отчёты</span><span>Поддержка</span>
+      </span><br/>на автопилоте.
+    </h1>
+    <p class="reveal mt-7 text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+      AI-ассистент Synthex подключается к вашим задачам, письмам и данным — и делает скучное за вас. Команда занимается тем, что важно.
+    </p>
+    <div class="reveal mt-9 flex flex-wrap gap-4 justify-center">
+      <a href="#pricing" class="magnetic font-600 bg-lime text-ink px-8 py-4 rounded-full hover:brightness-105 transition">Попробовать 14 дней</a>
+      <a href="#how" class="font-600 border border-slate-300 dark:border-white/20 text-slate-900 dark:text-white px-8 py-4 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition">Смотреть демо</a>
+    </div>
+    <p class="reveal mt-5 text-sm text-slate-500 dark:text-slate-400">Без карты · Настройка за 5 минут</p>
+
+    <!-- floating dashboard mock -->
+    <div class="reveal mt-16 max-w-4xl mx-auto">
+      <div class="float-card rounded-2xl border border-slate-200 dark:border-white/12 bg-white/70 dark:bg-white/5 backdrop-blur-xl p-3 shadow-2xl">
+        <div class="rounded-xl bg-ink/80 overflow-hidden">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/10">
+            <span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span>
+            <span class="ml-3 text-xs text-slate-400 font-mono">synthex — автопилот</span>
+          </div>
+          <div class="grid sm:grid-cols-3 gap-3 p-4 text-left">
+            <div class="rounded-lg bg-white/5 p-4"><p class="text-xs text-slate-400">Обработано задач</p><p class="font-display font-700 text-2xl text-white mt-1">1 284</p><div class="h-1.5 rounded-full bg-white/10 mt-3"><div class="h-full w-4/5 rounded-full bg-lime"></div></div></div>
+            <div class="rounded-lg bg-white/5 p-4"><p class="text-xs text-slate-400">Сэкономлено часов</p><p class="font-display font-700 text-2xl text-white mt-1">312</p><div class="h-1.5 rounded-full bg-white/10 mt-3"><div class="h-full w-3/5 rounded-full bg-brand-soft"></div></div></div>
+            <div class="rounded-lg bg-white/5 p-4"><p class="text-xs text-slate-400">Точность ответов</p><p class="font-display font-700 text-2xl text-white mt-1">98.6%</p><div class="h-1.5 rounded-full bg-white/10 mt-3"><div class="h-full rounded-full bg-lime shine" style="width:98%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- logos -->
+    <div class="reveal mt-16">
+      <p class="text-xs uppercase tracking-widest text-slate-400 mb-6">Нам доверяют команды из</p>
+      <div class="flex flex-wrap justify-center gap-x-10 gap-y-4 font-display font-700 text-slate-400 text-xl opacity-70">
+        <span>Nordic</span><span>Vektra</span><span>Полюс</span><span>Layer</span><span>Обувь+</span><span>Kontur</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- IMPACT stats -->
+<section class="border-y border-slate-200 dark:border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <div class="reveal"><p class="font-display font-800 text-4xl sm:text-5xl text-slate-900 dark:text-white"><span class="cnt" data-to="6" data-suffix="ч">0</span></p><p class="text-slate-500 dark:text-slate-400 text-sm mt-2">в неделю на человека</p></div>
+    <div class="reveal"><p class="font-display font-800 text-4xl sm:text-5xl text-slate-900 dark:text-white"><span class="cnt" data-to="89" data-suffix="%">0</span></p><p class="text-slate-500 dark:text-slate-400 text-sm mt-2">обращений закрывает бот</p></div>
+    <div class="reveal"><p class="font-display font-800 text-4xl sm:text-5xl text-slate-900 dark:text-white"><span class="cnt" data-to="50" data-suffix="+">0</span></p><p class="text-slate-500 dark:text-slate-400 text-sm mt-2">готовых интеграций</p></div>
+    <div class="reveal"><p class="font-display font-800 text-4xl sm:text-5xl text-slate-900 dark:text-white"><span class="cnt" data-to="5" data-suffix=" мин">0</span></p><p class="text-slate-500 dark:text-slate-400 text-sm mt-2">на настройку без кода</p></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="max-w-6xl mx-auto px-6 py-28">
+  <div class="reveal text-center max-w-2xl mx-auto mb-16">
+    <p class="text-brand dark:text-brand-soft text-sm font-700 uppercase tracking-wider">Как это работает</p>
+    <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 text-slate-900 dark:text-white">Три шага до автопилота</h2>
+  </div>
+  <div class="grid md:grid-cols-3 gap-5 relative">
+    <div class="reveal rounded-3xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[.03] p-8">
+      <div class="w-12 h-12 rounded-2xl bg-brand/15 text-brand dark:text-brand-soft grid place-items-center font-display font-800 text-xl mb-6">1</div>
+      <h3 class="font-display font-700 text-2xl text-slate-900 dark:text-white mb-3">Подключите сервисы</h3>
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Почта, Telegram, CRM, таблицы — галочками, без кода. Данные остаются на вашей стороне.</p>
+    </div>
+    <div class="reveal rounded-3xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[.03] p-8">
+      <div class="w-12 h-12 rounded-2xl bg-brand/15 text-brand dark:text-brand-soft grid place-items-center font-display font-800 text-xl mb-6">2</div>
+      <h3 class="font-display font-700 text-2xl text-slate-900 dark:text-white mb-3">Обучите на своих данных</h3>
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Synthex читает вашу базу знаний и историю переписки, чтобы отвечать в вашем тоне и по делу.</p>
+    </div>
+    <div class="reveal rounded-3xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[.03] p-8">
+      <div class="w-12 h-12 rounded-2xl bg-lime/25 text-slate-900 dark:text-lime grid place-items-center font-display font-800 text-xl mb-6">3</div>
+      <h3 class="font-display font-700 text-2xl text-slate-900 dark:text-white mb-3">Включите автопилот</h3>
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Ассистент берёт рутину на себя и присылает отчёт о сделанном. Вы контролируете, он работает.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES (tabs) -->
+<section id="features" class="max-w-6xl mx-auto px-6 py-28">
+  <div class="reveal text-center max-w-2xl mx-auto mb-14">
+    <p class="text-brand dark:text-brand-soft text-sm font-700 uppercase tracking-wider">Возможности</p>
+    <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 text-slate-900 dark:text-white">Один ассистент.<br/>Вся рутина.</h2>
+  </div>
+
+  <div class="reveal flex flex-wrap justify-center gap-2 mb-10" id="tabs">
+    <button class="tab-btn px-5 py-3 rounded-full text-sm font-600 border border-slate-200 dark:border-white/12 transition" data-tab="0">📥 Почта и задачи</button>
+    <button class="tab-btn px-5 py-3 rounded-full text-sm font-600 border border-slate-200 dark:border-white/12 transition" data-tab="1">📊 Отчёты</button>
+    <button class="tab-btn px-5 py-3 rounded-full text-sm font-600 border border-slate-200 dark:border-white/12 transition" data-tab="2">🤝 Поддержка</button>
+    <button class="tab-btn px-5 py-3 rounded-full text-sm font-600 border border-slate-200 dark:border-white/12 transition" data-tab="3">🔌 Интеграции</button>
+  </div>
+
+  <div class="reveal rounded-3xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[.03] overflow-hidden">
+    <div class="grid lg:grid-cols-2">
+      <div class="p-10 sm:p-14 flex flex-col justify-center">
+        <div id="tabIcon" class="text-4xl mb-5">📥</div>
+        <h3 id="tabTitle" class="font-display font-700 text-3xl text-slate-900 dark:text-white mb-4">Разбирает входящие за вас</h3>
+        <p id="tabDesc" class="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">Synthex читает письма и сообщения, сортирует по важности, готовит черновики ответов и превращает договорённости в задачи — автоматически.</p>
+        <ul id="tabList" class="mt-6 space-y-3 text-slate-700 dark:text-slate-300"></ul>
+      </div>
+      <div class="relative bg-gradient-to-br from-brand/10 to-lime/10 p-10 sm:p-14 grid place-items-center min-h-[360px] border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-white/10">
+        <div id="tabVisual" class="w-full max-w-sm space-y-3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="py-20 overflow-hidden">
+  <div class="max-w-2xl mx-auto px-6 text-center mb-10 reveal">
+    <p class="text-brand dark:text-brand-soft text-sm font-700 uppercase tracking-wider">Интеграции</p>
+    <h2 class="font-display font-800 text-3xl sm:text-4xl mt-4 text-slate-900 dark:text-white">Работает там, где вы уже работаете</h2>
+  </div>
+  <div class="relative">
+    <div class="intg-track" id="intgTrack"></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="max-w-6xl mx-auto px-6 py-28">
+  <div class="reveal text-center max-w-2xl mx-auto mb-10">
+    <p class="text-brand dark:text-brand-soft text-sm font-700 uppercase tracking-wider">Тарифы</p>
+    <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 text-slate-900 dark:text-white">Честные цены</h2>
+  </div>
+
+  <div class="reveal flex items-center justify-center gap-4 mb-12">
+    <span id="lblMonth" class="text-sm font-600">Помесячно</span>
+    <button id="billToggle" class="relative w-16 h-8 rounded-full bg-brand transition" aria-label="Переключить оплату">
+      <span id="knob" class="absolute top-1 left-1 w-6 h-6 rounded-full bg-white transition-transform duration-300"></span>
+    </button>
+    <span id="lblYear" class="text-sm font-600 text-slate-400">Раз в год <span class="text-lime bg-brand/15 px-2 py-0.5 rounded-full text-xs ml-1">−20%</span></span>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-5 items-stretch">
+    <div class="reveal rounded-3xl border border-slate-200 dark:border-white/10 p-8 flex flex-col bg-white dark:bg-white/[.02]">
+      <p class="font-display font-700 text-xl text-slate-900 dark:text-white">Solo</p>
+      <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Для фрилансеров</p>
+      <p class="mt-6"><span class="font-display font-800 text-5xl text-slate-900 dark:text-white price" data-m="690" data-y="552">690</span><span class="text-slate-400"> ₽/мес</span></p>
+      <ul class="mt-6 space-y-3 text-sm text-slate-600 dark:text-slate-300 flex-1">
+        <li>✓ 1 пользователь</li><li>✓ 500 задач в месяц</li><li>✓ Почта и календарь</li><li>✓ Базовые интеграции</li>
+      </ul>
+      <a href="#" class="mt-8 text-center rounded-full py-3 font-600 border border-slate-300 dark:border-white/15 hover:border-brand transition">Выбрать</a>
+    </div>
+    <div class="reveal rounded-3xl border-2 border-brand p-8 flex flex-col relative bg-white dark:bg-white/[.03] shadow-xl shadow-brand/10 md:-mt-3">
+      <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-white text-xs font-700 px-3 py-1 rounded-full">Выбор команд</span>
+      <p class="font-display font-700 text-xl text-brand dark:text-brand-soft">Team</p>
+      <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Для растущих команд</p>
+      <p class="mt-6"><span class="font-display font-800 text-5xl text-slate-900 dark:text-white price" data-m="2900" data-y="2320">2 900</span><span class="text-slate-400"> ₽/мес</span></p>
+      <ul class="mt-6 space-y-3 text-sm text-slate-600 dark:text-slate-300 flex-1">
+        <li>✓ До 10 пользователей</li><li>✓ Безлимит задач</li><li>✓ Автопилот и отчёты</li><li>✓ Все интеграции</li><li>✓ Поддержка 24/7</li>
+      </ul>
+      <a href="#" class="mt-8 text-center rounded-full py-3 font-700 bg-brand text-white hover:bg-brand-soft transition">Выбрать</a>
+    </div>
+    <div class="reveal rounded-3xl border border-slate-200 dark:border-white/10 p-8 flex flex-col bg-white dark:bg-white/[.02]">
+      <p class="font-display font-700 text-xl text-slate-900 dark:text-white">Enterprise</p>
+      <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Для больших компаний</p>
+      <p class="mt-6"><span class="font-display font-800 text-5xl text-slate-900 dark:text-white price" data-m="9900" data-y="7920">9 900</span><span class="text-slate-400"> ₽/мес</span></p>
+      <ul class="mt-6 space-y-3 text-sm text-slate-600 dark:text-slate-300 flex-1">
+        <li>✓ Безлимит пользователей</li><li>✓ Приватная модель</li><li>✓ SSO и аудит</li><li>✓ Личный менеджер</li>
+      </ul>
+      <a href="#" class="mt-8 text-center rounded-full py-3 font-600 border border-slate-300 dark:border-white/15 hover:border-brand transition">Связаться</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="max-w-3xl mx-auto px-6 py-28">
+  <div class="reveal text-center mb-12">
+    <p class="text-brand dark:text-brand-soft text-sm font-700 uppercase tracking-wider">Вопросы</p>
+    <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 text-slate-900 dark:text-white">Коротко о главном</h2>
+  </div>
+  <div class="space-y-3" id="faqList"></div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="max-w-6xl mx-auto px-6 py-28">
+  <div class="reveal text-center max-w-xl mx-auto mb-14">
+    <p class="text-brand dark:text-brand-soft text-sm font-700 uppercase tracking-wider">Отзывы</p>
+    <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 text-slate-900 dark:text-white">Команды экономят часы</h2>
+  </div>
+  <div class="grid md:grid-cols-3 gap-5">
+    <figure class="reveal rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[.02] p-7 flex flex-col">
+      <div class="text-brand dark:text-lime mb-4 tracking-widest">★★★★★</div>
+      <blockquote class="text-slate-700 dark:text-slate-200 leading-relaxed flex-1">«Synthex разбирает нашу почту и заводит задачи сам. Освободилось примерно 6 часов в неделю на человека.»</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3">
+        <img src="assets/img/a1.jpg" class="w-11 h-11 rounded-full object-cover" alt="Аватар"/>
+        <div><p class="font-600 text-sm text-slate-900 dark:text-white">Екатерина Лисова</p><p class="text-slate-500 dark:text-slate-400 text-xs">COO, Vektra</p></div>
+      </figcaption>
+    </figure>
+    <figure class="reveal rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[.02] p-7 flex flex-col md:mt-8">
+      <div class="text-brand dark:text-lime mb-4 tracking-widest">★★★★★</div>
+      <blockquote class="text-slate-700 dark:text-slate-200 leading-relaxed flex-1">«Настроили за вечер без разработчиков. Отчёты, которые раньше собирали вручную, теперь приходят сами каждое утро.»</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3">
+        <img src="assets/img/a2.jpg" class="w-11 h-11 rounded-full object-cover" alt="Аватар"/>
+        <div><p class="font-600 text-sm text-slate-900 dark:text-white">Артём Гаврилов</p><p class="text-slate-500 dark:text-slate-400 text-xs">основатель, Layer</p></div>
+      </figcaption>
+    </figure>
+    <figure class="reveal rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[.02] p-7 flex flex-col">
+      <div class="text-brand dark:text-lime mb-4 tracking-widest">★★★★★</div>
+      <blockquote class="text-slate-700 dark:text-slate-200 leading-relaxed flex-1">«Клиенты получают ответ мгновенно в любое время. Бот закрывает 89% обращений, остальное передаёт нам с контекстом.»</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3">
+        <img src="assets/img/a3.jpg" class="w-11 h-11 rounded-full object-cover" alt="Аватар"/>
+        <div><p class="font-600 text-sm text-slate-900 dark:text-white">Ольга Нартова</p><p class="text-slate-500 dark:text-slate-400 text-xs">поддержка, Nordic</p></div>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="max-w-6xl mx-auto px-6 pb-28">
+  <div class="reveal relative overflow-hidden rounded-[36px] mesh-dark p-12 sm:p-20 text-center">
+    <div class="absolute inset-0 grid-fade"></div>
+    <div class="relative">
+      <h2 class="font-display font-800 text-white text-4xl sm:text-6xl leading-tight">Начните экономить<br/>время сегодня.</h2>
+      <p class="text-slate-300 mt-5 max-w-md mx-auto">14 дней бесплатно. Без карты. Отключить можно в один клик.</p>
+      <a href="#" class="magnetic inline-block mt-8 bg-lime text-ink font-700 px-9 py-4 rounded-full hover:brightness-105 transition">Запустить Synthex</a>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-slate-200 dark:border-white/10 py-12">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-sm">
+    <div class="font-display font-800 text-lg flex items-center gap-2 text-slate-900 dark:text-white"><span class="w-6 h-6 rounded-md bg-brand grid place-items-center text-white text-xs">✦</span>Synthex</div>
+    <p>Работа-концепт © MKZV · дизайн и фронтенд</p>
+  </div>
+</footer>
+
+<script>
+  // theme
+  const root=document.documentElement;
+  const nav=document.getElementById('nav');
+  if(localStorage.getItem('synthex-theme')==='light') root.classList.remove('dark');
+  function syncNav(){
+    const s=scrollY>30, dark=root.classList.contains('dark');
+    nav.style.background=s?(dark?'rgba(10,10,18,.8)':'rgba(255,255,255,.8)'):'transparent';
+    nav.style.backdropFilter=s?'blur(12px)':'none';
+    nav.style.borderBottom=s?'1px solid rgba(128,128,160,.14)':'none';
+  }
+  document.getElementById('themeBtn').addEventListener('click',()=>{
+    root.classList.toggle('dark');
+    localStorage.setItem('synthex-theme',root.classList.contains('dark')?'dark':'light');
+    syncNav();
+  });
+  addEventListener('scroll',syncNav,{passive:true});
+
+  // reveals
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*70)+'ms';io.observe(el)});
+
+  // counters
+  const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){
+    const el=e.target,to=+el.dataset.to,suf=el.dataset.suffix||'';const t0=performance.now();
+    (function t(now){const p=Math.min((now-t0)/1500,1);const e2=1-Math.pow(1-p,3);
+      el.textContent=Math.round(to*e2)+suf;if(p<1)requestAnimationFrame(t)})(t0);
+    cio.unobserve(el);
+  }}),{threshold:.6});
+  document.querySelectorAll('.cnt').forEach(el=>cio.observe(el));
+
+  // rotating hero word
+  const rotEls=[...document.querySelectorAll('#rot>span')];let ri=0;
+  setInterval(()=>{
+    rotEls[ri].classList.remove('on');rotEls[ri].classList.add('off');
+    const prev=ri; ri=(ri+1)%rotEls.length;
+    rotEls[ri].classList.remove('off');rotEls[ri].classList.add('on');
+    setTimeout(()=>rotEls[prev].classList.remove('off'),500);
+  },2200);
+
+  // magnetic buttons
+  document.querySelectorAll('.magnetic').forEach(b=>{
+    b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();
+      b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`;});
+    b.addEventListener('mouseleave',()=>b.style.transform='translate(0,0)');
+  });
+
+  // integrations marquee
+  const integrations=['Telegram','Gmail','Slack','Notion','Google Sheets','Bitrix24','amoCRM','Jira','Trello','Zapier','Webhooks','API'];
+  const track=document.getElementById('intgTrack');
+  const chip=n=>`<div class="shrink-0 flex items-center gap-2 px-5 py-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[.03] font-600 text-slate-700 dark:text-slate-200"><span class="w-2 h-2 rounded-full bg-lime"></span>${n}</div>`;
+  track.innerHTML=[...integrations,...integrations].map(chip).join('');
+
+  // TABS
+  const tabs=[
+    {icon:'📥',title:'Разбирает входящие за вас',desc:'Synthex читает письма и сообщения, сортирует по важности, готовит черновики ответов и превращает договорённости в задачи — автоматически.',
+     list:['Сортировка по важности','Черновики ответов в вашем тоне','Задачи из писем в один клик'],
+     visual:[['Входящие','24 новых'],['Черновик готов','Ответ клиенту ✓'],['Новая задача','Созвон в 15:00']]},
+    {icon:'📊',title:'Собирает отчёты сам',desc:'Каждое утро Synthex готовит сводку по проектам, продажам и метрикам — в понятном виде, без ручной возни с таблицами.',
+     list:['Ежедневные сводки','Графики и тренды','Экспорт в PDF и Notion'],
+     visual:[['Выручка за неделю','+18% ↑'],['Топ-канал','Органика'],['Отчёт отправлен','Команде ✓']]},
+    {icon:'🤝',title:'Отвечает клиентам 24/7',desc:'AI-агент подхватывает обращения в чате и почте, отвечает на частые вопросы и передаёт сложное живому оператору с полным контекстом.',
+     list:['Мгновенные ответы','Передача оператору с историей','База знаний из ваших данных'],
+     visual:[['Обращений сегодня','142'],['Решено ботом','89%'],['Средний ответ','8 сек']]},
+    {icon:'🔌',title:'Работает с вашими сервисами',desc:'Подключается к Telegram, почте, CRM, таблицам и десяткам других инструментов. Ваши данные остаются на месте — Synthex просто помогает.',
+     list:['50+ готовых интеграций','API и вебхуки','Данные под вашим контролем'],
+     visual:[['Telegram','Подключено ✓'],['CRM','Синхронизация'],['Таблицы','Онлайн ✓']]},
+  ];
+  const tabBtns=document.querySelectorAll('.tab-btn');
+  function setTab(i){
+    const t=tabs[i];
+    document.getElementById('tabIcon').textContent=t.icon;
+    document.getElementById('tabTitle').textContent=t.title;
+    document.getElementById('tabDesc').textContent=t.desc;
+    document.getElementById('tabList').innerHTML=t.list.map(x=>`<li class="flex items-center gap-3"><span class="text-lime">✓</span>${x}</li>`).join('');
+    document.getElementById('tabVisual').innerHTML=t.visual.map(([a,b],k)=>`
+      <div class="flex items-center justify-between rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 px-4 py-3 shadow-sm" style="animation:fl .5s ${k*0.06}s both">
+        <span class="text-sm text-slate-600 dark:text-slate-300">${a}</span>
+        <span class="text-sm font-700 text-brand dark:text-brand-soft">${b}</span></div>`).join('');
+    tabBtns.forEach((b,k)=>{
+      const on=k===i;
+      b.classList.toggle('bg-brand',on);b.classList.toggle('text-white',on);b.classList.toggle('border-brand',on);
+    });
+  }
+  tabBtns.forEach((b,i)=>b.addEventListener('click',()=>setTab(i)));
+  setTab(0);
+
+  // PRICING toggle
+  let yearly=false;
+  const knob=document.getElementById('knob'),lblM=document.getElementById('lblMonth'),lblY=document.getElementById('lblYear');
+  document.getElementById('billToggle').addEventListener('click',()=>{
+    yearly=!yearly;
+    knob.style.transform=yearly?'translateX(32px)':'translateX(0)';
+    lblM.classList.toggle('text-slate-400',yearly);lblY.classList.toggle('text-slate-400',!yearly);
+    document.querySelectorAll('.price').forEach(el=>{
+      const v=yearly?+el.dataset.y:+el.dataset.m;
+      const start=parseInt(el.textContent.replace(/\s/g,''))||v,end=v,t0=performance.now();
+      (function anim(t){const p=Math.min((t-t0)/400,1);const cur=Math.round(start+(end-start)*p);el.textContent=cur.toLocaleString('ru-RU');if(p<1)requestAnimationFrame(anim)})(t0);
+    });
+  });
+
+  // FAQ
+  const faqs=[
+    ['Нужно ли уметь программировать?','Нет. Synthex настраивается через простой интерфейс за пять минут — подключаете сервисы галочками, без единой строки кода.'],
+    ['Что с безопасностью данных?','Данные хранятся в изолированном контуре, шифруются и не используются для обучения моделей. На тарифе Enterprise доступна приватная модель.'],
+    ['Можно ли отменить в любой момент?','Да. Подписка отключается в один клик, без звонков в поддержку и «удержаний». Оплата не спишется за следующий период.'],
+    ['С какими сервисами работает?','Telegram, почта, Google-таблицы, популярные CRM и ещё 50+ интеграций. Есть открытый API и вебхуки для своих сценариев.'],
+  ];
+  document.getElementById('faqList').innerHTML=faqs.map(([q,a])=>`
+    <div class="rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden bg-white dark:bg-white/[.02]">
+      <button class="faq-q w-full flex items-center justify-between gap-4 text-left px-6 py-5 font-600 text-slate-900 dark:text-white">
+        <span>${q}</span><span class="faq-ic text-brand text-xl transition-transform shrink-0">+</span>
+      </button>
+      <div class="acc-body"><p class="px-6 pb-5 text-slate-600 dark:text-slate-400 leading-relaxed">${a}</p></div>
+    </div>`).join('');
+  document.querySelectorAll('.faq-q').forEach(btn=>btn.addEventListener('click',()=>{
+    const body=btn.nextElementSibling,ic=btn.querySelector('.faq-ic'),open=body.style.maxHeight&&body.style.maxHeight!=='0px';
+    document.querySelectorAll('.acc-body').forEach(b=>{b.style.maxHeight='0px';b.previousElementSibling.querySelector('.faq-ic').style.transform='none'});
+    if(!open){body.style.maxHeight=body.scrollHeight+'px';ic.style.transform='rotate(45deg)'}
+  }));
+</script>
+</body>
+</html>

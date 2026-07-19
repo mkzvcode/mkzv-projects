@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PULSE — фестиваль электронной музыки · 14–16 августа</title>
+<meta name="description" content="PULSE Festival 2026 — три дня, три сцены, один пульс. 40+ артистов электронной музыки под открытым небом на площадке «Причал»." />
+<meta name="robots" content="noindex, follow" />
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
+<style>
+  :root{
+    --bg:#07040f; --bg2:#0d0620;
+    --acid:#c9ff2e; --pink:#ff2ea6; --cyan:#22e6ff; --violet:#7a2eff;
+    --white:#f5f0ff; --dim:rgba(245,240,255,.6);
+    --anton:'Anton',sans-serif; --mono:'Space Mono',monospace; --body:'Manrope',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--white);font-family:var(--body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--acid);color:#000}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .anton{font-family:var(--anton);text-transform:uppercase;letter-spacing:.01em;line-height:.86}
+  .mono{font-family:var(--mono)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--acid)}
+
+  /* animated aurora bg */
+  .bgfx{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg)}
+  .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;mix-blend-mode:screen;will-change:transform}
+  .b1{width:50vw;height:50vw;background:var(--violet);left:-10vw;top:-10vw;animation:drift 18s ease-in-out infinite}
+  .b2{width:44vw;height:44vw;background:var(--pink);right:-10vw;top:10vh;animation:drift 22s ease-in-out infinite reverse}
+  .b3{width:40vw;height:40vw;background:var(--cyan);left:20vw;bottom:-15vw;animation:drift 26s ease-in-out infinite}
+  @keyframes drift{50%{transform:translate(8vw,6vh) scale(1.15)}}
+  .grain{position:fixed;inset:0;z-index:-1;opacity:.06;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .scanlines{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.4;
+    background:repeating-linear-gradient(180deg,transparent 0 2px,rgba(0,0,0,.14) 2px 3px)}
+
+  /* progress */
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--acid);z-index:300;box-shadow:0 0 12px var(--acid)}
+
+  /* NAV */
+  nav{position:fixed;top:0;inset-inline:0;z-index:100;transition:.3s}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding:18px 24px}
+  nav.scrolled{background:rgba(7,4,15,.72);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+  .logo{font-family:var(--anton);font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+  .logo span{color:var(--acid)}
+  .navlinks{display:flex;gap:30px;font-family:var(--mono);font-size:13px;text-transform:uppercase}
+  .navlinks a{transition:.2s}.navlinks a:hover{color:var(--acid)}
+  .btn{font-family:var(--mono);font-weight:700;font-size:13px;text-transform:uppercase;background:var(--acid);color:#000;
+    padding:12px 22px;border-radius:2px;transition:.25s;border:2px solid var(--acid);display:inline-block;cursor:pointer}
+  .btn:hover{background:transparent;color:var(--acid)}
+  @media(max-width:760px){.navlinks{display:none}}
+
+  /* HERO */
+  .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:120px 0 60px;text-align:center}
+  .hero .tag{margin-bottom:22px}
+  .hero h1{font-family:var(--anton);text-transform:uppercase;font-size:clamp(88px,26vw,360px);line-height:.8;
+    background:linear-gradient(180deg,var(--white),var(--white) 40%,var(--pink));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 0 40px rgba(255,46,166,.4));cursor:default}
+  .hero .sub{font-family:var(--anton);font-size:clamp(20px,4vw,46px);text-transform:uppercase;color:var(--acid);letter-spacing:.06em;margin-top:6px}
+  .hero .meta{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:32px;font-family:var(--mono);font-size:14px}
+  .hero .meta b{color:var(--cyan)}
+  .glitch{position:relative}
+  .glitch::before,.glitch::after{content:attr(data-t);position:absolute;inset:0;background:inherit;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .glitch::before{color:var(--cyan);-webkit-text-fill-color:var(--cyan);animation:gl 3.5s infinite;clip-path:inset(0 0 55% 0);opacity:0}
+  @keyframes gl{0%,90%,100%{opacity:0;transform:translate(0)}92%{opacity:.7;transform:translate(-4px,-2px)}94%{transform:translate(4px,2px)}96%{transform:translate(-2px,1px)}}
+
+  /* COUNTDOWN */
+  .count{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:44px}
+  .cbox{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:18px 10px;min-width:96px;backdrop-filter:blur(6px)}
+  .cbox b{font-family:var(--anton);font-size:clamp(40px,7vw,64px);display:block;line-height:1;color:var(--white)}
+  .cbox small{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+
+  .ticker{overflow:hidden;border-top:2px solid var(--acid);border-bottom:2px solid var(--acid);background:var(--acid)}
+  .ticker .row{display:flex;gap:24px;white-space:nowrap;width:max-content;animation:mq 20s linear infinite;padding:8px 0;
+    font-family:var(--anton);font-size:22px;text-transform:uppercase;color:#000}
+  .ticker.rev .row{animation-direction:reverse;animation-duration:26s}
+  @keyframes mq{to{transform:translateX(-50%)}}
+
+  /* kinetic names band */
+  .kinetic{padding:70px 0 40px;overflow:hidden}
+  .kinetic .line{display:flex;gap:40px;white-space:nowrap;width:max-content;font-family:var(--anton);
+    font-size:clamp(40px,7vw,90px);text-transform:uppercase;-webkit-text-stroke:1.5px rgba(245,240,255,.28);color:transparent;animation:mq 30s linear infinite}
+  .kinetic .line.alt{animation-duration:38s;animation-direction:reverse;color:transparent;-webkit-text-stroke:1.5px rgba(201,255,46,.35);margin-top:6px}
+  .kinetic .line span{color:transparent}
+  .kinetic .line em{font-style:normal;-webkit-text-stroke:0;color:var(--pink)}
+
+  .reveal{opacity:0;transform:translateY(40px);transition:.9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ABOUT / stats */
+  .about{padding:100px 0}
+  .about .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+  @media(max-width:860px){.about .grid{grid-template-columns:1fr;gap:40px}}
+  .about h2{font-family:var(--anton);font-size:clamp(40px,7vw,92px);text-transform:uppercase;line-height:.9}
+  .about h2 em{font-style:normal;color:var(--acid)}
+  .about p{color:var(--dim);font-size:17px;line-height:1.8;margin-top:24px;max-width:44ch}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .stat{border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:26px 22px;background:rgba(255,255,255,.02)}
+  .stat b{font-family:var(--anton);font-size:clamp(44px,6vw,64px);display:block;line-height:1;color:var(--pink)}
+  .stat:nth-child(2) b{color:var(--cyan)}.stat:nth-child(3) b{color:var(--acid)}.stat:nth-child(4) b{color:var(--violet)}
+  .stat small{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:8px;display:block}
+
+  /* LINEUP */
+  .lineup{padding:110px 0}
+  .lineup .head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:20px}
+  .lineup h2{font-family:var(--anton);font-size:clamp(48px,10vw,140px);text-transform:uppercase}
+  .lineup h2 em{font-style:normal;color:var(--pink)}
+  .days{display:flex;gap:8px;flex-wrap:wrap}
+  .day{font-family:var(--mono);font-weight:700;font-size:14px;text-transform:uppercase;padding:12px 24px;border:2px solid rgba(255,255,255,.2);
+    border-radius:2px;cursor:pointer;transition:.25s;background:transparent;color:var(--white)}
+  .day:hover{border-color:var(--acid)}
+  .day.active{background:var(--pink);border-color:var(--pink);color:#000}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:22px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:9px;height:9px;border-radius:50%}
+  .lineup-body{min-height:420px}
+  .headliner{font-family:var(--anton);text-transform:uppercase;font-size:clamp(44px,9vw,120px);line-height:.9;
+    background:linear-gradient(90deg,var(--acid),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+  .acts{margin-top:20px;border-top:1px solid rgba(255,255,255,.14)}
+  .act{display:flex;align-items:baseline;justify-content:space-between;width:100%;padding:22px 4px;border-bottom:1px solid rgba(255,255,255,.14);transition:.3s;gap:16px}
+  .act:hover{padding-left:18px;background:rgba(255,255,255,.03)}
+  .act .name{font-family:var(--anton);font-size:clamp(24px,4vw,44px);text-transform:uppercase;display:flex;align-items:center;gap:14px}
+  .act .name i{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+  .act:hover .name{color:var(--acid)}
+  .act .meta2{display:flex;gap:20px;align-items:baseline}
+  .act .stage{font-family:var(--mono);font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
+  .act .time{font-family:var(--mono);font-size:14px;color:var(--dim)}
+  .fade{animation:fadeIn .5s}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* STAGES */
+  .stages{padding:100px 0}
+  .stages .sec-head{text-align:center;margin-bottom:50px}
+  .stages h2{font-family:var(--anton);font-size:clamp(44px,9vw,120px);text-transform:uppercase}
+  .stg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:820px){.stg-grid{grid-template-columns:1fr}}
+  .stg{border:2px solid rgba(255,255,255,.12);border-radius:10px;padding:36px 28px;position:relative;overflow:hidden;transition:.4s;background:rgba(255,255,255,.02);min-height:260px;display:flex;flex-direction:column}
+  .stg::before{content:"";position:absolute;inset:0;opacity:.12;transition:.4s}
+  .stg:hover{transform:translateY(-8px)}
+  .stg:hover::before{opacity:.22}
+  .stg.main::before{background:radial-gradient(70% 60% at 50% 0,var(--pink),transparent)}
+  .stg.under::before{background:radial-gradient(70% 60% at 50% 0,var(--cyan),transparent)}
+  .stg.dome::before{background:radial-gradient(70% 60% at 50% 0,var(--acid),transparent)}
+  .stg .no{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);position:relative}
+  .stg h3{font-family:var(--anton);font-size:clamp(30px,5vw,48px);text-transform:uppercase;margin:12px 0;position:relative}
+  .stg.main h3{color:var(--pink)}.stg.under h3{color:var(--cyan)}.stg.dome h3{color:var(--acid)}
+  .stg p{color:var(--dim);font-size:15px;line-height:1.7;position:relative;flex:1}
+  .stg .cap2{font-family:var(--mono);font-size:12px;color:var(--white);margin-top:16px;position:relative}
+
+  /* GALLERY */
+  .gallery{padding:60px 0 20px}
+  .gallery .sec-head{text-align:center;margin-bottom:40px}
+  .gallery h2{font-family:var(--anton);font-size:clamp(44px,9vw,120px);text-transform:uppercase}
+  .gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:760px){.gal-grid{grid-template-columns:1fr}}
+  .gal{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:8px;border:1px solid rgba(255,255,255,.1)}
+  .gal img{width:100%;height:100%;object-fit:cover;transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .gal::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(7,4,15,.6));transition:.4s}
+  .gal:hover img{transform:scale(1.07)}
+  .gal:hover{border-color:var(--acid)}
+  .gal .cap{position:absolute;left:16px;bottom:14px;z-index:2;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acid)}
+
+  /* TICKETS */
+  .tickets{padding:120px 0 100px;border-top:2px solid rgba(255,255,255,.1)}
+  .tickets .sec-head{text-align:center;margin-bottom:56px}
+  .tickets h2{font-family:var(--anton);font-size:clamp(44px,9vw,120px);text-transform:uppercase}
+  .tk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:820px){.tk-grid{grid-template-columns:1fr}}
+  .tk{border:2px solid rgba(255,255,255,.14);border-radius:8px;padding:36px 30px;position:relative;overflow:hidden;transition:.4s;background:rgba(255,255,255,.02)}
+  .tk:hover{transform:translateY(-8px);border-color:var(--acid)}
+  .tk.hot{border-color:var(--pink);background:linear-gradient(160deg,rgba(255,46,166,.12),transparent)}
+  .tk .kind{font-family:var(--anton);font-size:30px;text-transform:uppercase}
+  .tk .price{font-family:var(--anton);font-size:56px;margin:14px 0;color:var(--acid)}
+  .tk.hot .price{color:var(--pink)}
+  .tk ul{list-style:none;font-family:var(--mono);font-size:13px;line-height:2;color:rgba(245,240,255,.75)}
+  .tk .badge{position:absolute;top:16px;right:-30px;background:var(--pink);color:#000;font-family:var(--mono);font-weight:700;font-size:11px;
+    padding:5px 40px;transform:rotate(45deg);text-transform:uppercase}
+  .tk .btn{margin-top:24px;width:100%;text-align:center;border-radius:4px}
+
+  /* INFO */
+  .info{padding:100px 0}
+  .info .sec-head{text-align:center;margin-bottom:50px}
+  .info h2{font-family:var(--anton);font-size:clamp(44px,9vw,120px);text-transform:uppercase}
+  .info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:820px){.info-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.info-grid{grid-template-columns:1fr}}
+  .icard{border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:28px 24px;background:rgba(255,255,255,.02);transition:.3s}
+  .icard:hover{border-color:var(--acid);background:rgba(201,255,46,.04)}
+  .icard .ico{font-size:26px;margin-bottom:14px}
+  .icard h4{font-family:var(--anton);font-size:22px;text-transform:uppercase;margin-bottom:8px}
+  .icard p{color:var(--dim);font-size:14px;line-height:1.7;font-family:var(--mono)}
+  .rules{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px}
+  .rules span{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding:8px 16px;border:1px solid rgba(255,255,255,.16);border-radius:30px;color:var(--dim)}
+
+  /* FOOTER */
+  footer{padding:90px 0 40px;text-align:center;border-top:2px solid var(--acid)}
+  footer h3{font-family:var(--anton);font-size:clamp(40px,10vw,120px);text-transform:uppercase;line-height:.9;margin-bottom:24px}
+  footer h3 em{font-style:normal;color:var(--pink)}
+  footer .socials{display:flex;gap:20px;justify-content:center;font-family:var(--mono);font-size:14px;text-transform:uppercase;margin-bottom:30px;flex-wrap:wrap}
+  footer .socials a{transition:.2s}footer .socials a:hover{color:var(--acid)}
+  footer .cr{font-family:var(--mono);font-size:12px;color:rgba(245,240,255,.4)}
+
+  .backlink{position:fixed;left:18px;bottom:18px;z-index:200;font-family:var(--mono);font-size:12px;text-transform:uppercase;
+    background:rgba(7,4,15,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.16);padding:9px 15px;border-radius:30px;transition:.3s}
+  .backlink:hover{color:var(--acid);border-color:var(--acid)}
+</style>
+</head>
+<body>
+<div class="bgfx"><div class="blob b1" id="blob1"></div><div class="blob b2" id="blob2"></div><div class="blob b3" id="blob3"></div></div>
+<div class="grain"></div>
+<div class="scanlines"></div>
+<div class="progress" id="progress"></div>
+<a class="backlink" href="https://github.com/mkzvcode/mkzv-projects" target="_blank" rel="noopener">← все проекты</a>
+
+<nav id="nav">
+  <div class="wrap">
+    <div class="logo">PULSE<span>_</span></div>
+    <div class="navlinks">
+      <a href="#lineup">Лайнап</a><a href="#stages">Сцены</a><a href="#tickets">Билеты</a><a href="#info">Инфо</a>
+    </div>
+    <a href="#tickets" class="btn">Билеты</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="tag reveal">14–16 августа 2026 · Открытая площадка «Причал»</p>
+    <h1 class="glitch reveal" data-t="PULSE">PULSE</h1>
+    <p class="sub reveal">Три дня · Три сцены · Один пульс</p>
+    <div class="meta reveal">
+      <span>2026</span><span>·</span><span><b>40+</b> артистов</span><span>·</span><span>Open air</span><span>·</span><span><b>18+</b></span>
+    </div>
+    <div class="count reveal" id="countdown">
+      <div class="cbox"><b id="dd">00</b><small>дней</small></div>
+      <div class="cbox"><b id="hh">00</b><small>часов</small></div>
+      <div class="cbox"><b id="mm">00</b><small>минут</small></div>
+      <div class="cbox"><b id="ss">00</b><small>секунд</small></div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker"><div class="row">
+  LINE-UP DROP ✦ EARLY BIRD SOLD OUT ✦ SECRET GUEST ✦ 3 STAGES ✦ SUNRISE SET ✦
+  LINE-UP DROP ✦ EARLY BIRD SOLD OUT ✦ SECRET GUEST ✦ 3 STAGES ✦ SUNRISE SET ✦
+</div></div>
+
+<section class="kinetic" aria-hidden="true">
+  <div class="line">AURORA VHS <em>✦</em> BLACK METEOR <em>✦</em> HYPNOTICA <em>✦</em> NEON VOID <em>✦</em> SOLARIS <em>✦</em>&nbsp;AURORA VHS <em>✦</em> BLACK METEOR <em>✦</em> HYPNOTICA <em>✦</em> NEON VOID <em>✦</em> SOLARIS <em>✦</em>&nbsp;</div>
+  <div class="line alt">ГРАВИТАЦИЯ ✦ МОЛОТ ✦ SUBLIMINA ✦ ФОРМА ✦ VANDAL ✦&nbsp;ГРАВИТАЦИЯ ✦ МОЛОТ ✦ SUBLIMINA ✦ ФОРМА ✦ VANDAL ✦&nbsp;</div>
+</section>
+
+<section class="about">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="tag reveal">Что это</p>
+        <h2 class="reveal">Три дня<br/>без <em>паузы</em>.</h2>
+        <p class="reveal">PULSE — это не просто набор диджеев. Это город на выходные: рассветные сеты у воды, андеграунд в ангаре и главная сцена, от которой дрожит земля. Ты приезжаешь на пару часов и остаёшься до утра.</p>
+        <p class="reveal">Open air на берегу, три сцены с разным характером, фудкорт, маркет и арт-инсталляции. Один браслет — весь фестиваль.</p>
+      </div>
+      <div class="stat-grid reveal">
+        <div class="stat"><b class="cnt" data-to="3" data-suffix="">0</b><small>дня нон-стоп</small></div>
+        <div class="stat"><b class="cnt" data-to="3" data-suffix="">0</b><small>сцены</small></div>
+        <div class="stat"><b class="cnt" data-to="40" data-suffix="+">0</b><small>артистов</small></div>
+        <div class="stat"><b class="cnt" data-to="60" data-suffix="k">0</b><small>гостей за год</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lineup" id="lineup">
+  <div class="wrap">
+    <div class="head">
+      <h2 class="reveal">Лайн<em>ап</em></h2>
+      <div class="days reveal">
+        <button class="day active" data-day="0">День 1 · 14.08</button>
+        <button class="day" data-day="1">День 2 · 15.08</button>
+        <button class="day" data-day="2">День 3 · 16.08</button>
+      </div>
+    </div>
+    <div class="legend reveal">
+      <span><i style="background:var(--pink)"></i>Main stage</span>
+      <span><i style="background:var(--cyan)"></i>Underground</span>
+      <span><i style="background:var(--acid)"></i>Sunrise dome</span>
+    </div>
+    <div class="lineup-body" id="lineupBody"></div>
+  </div>
+</section>
+
+<section class="stages" id="stages">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="tag reveal">Три характера</p>
+      <h2 class="reveal">Сцены</h2>
+    </div>
+    <div class="stg-grid">
+      <div class="stg main reveal">
+        <div class="no">Stage 01</div>
+        <h3>Main</h3>
+        <p>Гигантский экран, свет до горизонта и бас, который слышно с парковки. Здесь играют хедлайнеры и случается главное безумие ночи.</p>
+        <div class="cap2">Вместимость 20 000 · до 02:00</div>
+      </div>
+      <div class="stg under reveal">
+        <div class="no">Stage 02</div>
+        <h3>Underground</h3>
+        <p>Бывший ангар, бетон, дым и техно без компромиссов. Для тех, кто приходит слушать, а не фотографироваться.</p>
+        <div class="cap2">Вместимость 4 000 · до 06:00</div>
+      </div>
+      <div class="stg dome reveal">
+        <div class="no">Stage 03</div>
+        <h3>Sunrise Dome</h3>
+        <p>Купол у воды, где мелодик-хаус встречает рассвет. Самые тёплые сеты фестиваля — под открытым небом, лицом к реке.</p>
+        <div class="cap2">Вместимость 2 500 · до 08:00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="tag reveal">Было жарко</p>
+      <h2 class="reveal">Прошлый год</h2>
+    </div>
+    <div class="gal-grid">
+      <div class="gal reveal"><img src="assets/img/g1.jpg" alt="Толпа на фестивале" loading="lazy"/><span class="cap">Main stage</span></div>
+      <div class="gal reveal"><img src="assets/img/g2.jpg" alt="Ночной сет" loading="lazy"/><span class="cap">Night set</span></div>
+      <div class="gal reveal"><img src="assets/img/g3.jpg" alt="Диджей на сцене" loading="lazy"/><span class="cap">Underground</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="tickets" id="tickets">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="tag reveal">Успей по цене</p>
+      <h2 class="reveal">Билеты</h2>
+    </div>
+    <div class="tk-grid">
+      <div class="tk reveal">
+        <div class="kind">1 день</div>
+        <div class="price">3 900₽</div>
+        <ul><li>✦ Вход на один день</li><li>✦ Доступ ко всем сценам</li><li>✦ Зона фудкорта</li></ul>
+        <a href="#" class="btn">Купить</a>
+      </div>
+      <div class="tk hot reveal">
+        <div class="badge">хит</div>
+        <div class="kind">Full pass</div>
+        <div class="price">8 900₽</div>
+        <ul><li>✦ Все три дня</li><li>✦ Фаст-трек вход</li><li>✦ Мерч в подарок</li><li>✦ Возврат браслета</li></ul>
+        <a href="#" class="btn">Купить</a>
+      </div>
+      <div class="tk reveal">
+        <div class="kind">VIP</div>
+        <div class="price">18 900₽</div>
+        <ul><li>✦ Всё из Full pass</li><li>✦ VIP-терраса у сцены</li><li>✦ Бар и зона отдыха</li><li>✦ Отдельный вход</li></ul>
+        <a href="#" class="btn">Купить</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info" id="info">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="tag reveal">Полезное</p>
+      <h2 class="reveal">Инфо</h2>
+    </div>
+    <div class="info-grid">
+      <div class="icard reveal"><div class="ico">📍</div><h4>Как добраться</h4><p>Площадка «Причал», набережная. Шаттлы от метро каждые 15 минут, парковка на 3000 мест.</p></div>
+      <div class="icard reveal"><div class="ico">⏰</div><h4>Часы</h4><p>Ворота открываются в 16:00. Main до 02:00, Underground и Dome — до рассвета.</p></div>
+      <div class="icard reveal"><div class="ico">🎟</div><h4>Браслет</h4><p>Обменяй билет на браслет на входе. Один браслет = все три дня и все сцены.</p></div>
+      <div class="icard reveal"><div class="ico">💳</div><h4>Оплата</h4><p>Территория кэшлесс. Пополняй браслет в приложении и плати одним касанием.</p></div>
+    </div>
+    <div class="rules reveal">
+      <span>18+ · паспорт на входе</span><span>Без своей еды и напитков</span><span>Без стекла</span><span>Камеры хранения</span><span>Медпункт 24/7</span><span>Возврат браслета</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <h3 class="reveal">Ты<br/><em>придёшь?</em></h3>
+    <div class="socials reveal">
+      <a href="#">Instagram</a><a href="#">Telegram</a><a href="#">YouTube</a><a href="#">TikTok</a>
+    </div>
+    <p class="cr">PULSE Festival 2026 · Работа-концепт © MKZV · 18+</p>
+  </div>
+</footer>
+
+<script>
+  // nav + progress
+  const nav=document.getElementById('nav'),progress=document.getElementById('progress');
+  addEventListener('scroll',()=>{
+    nav.classList.toggle('scrolled',scrollY>40);
+    const h=document.documentElement.scrollHeight-innerHeight;
+    progress.style.width=(scrollY/h*100)+'%';
+  },{passive:true});
+
+  // reveals
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*70)+'ms';io.observe(el)});
+
+  // stat counters
+  const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){
+    const el=e.target,to=+el.dataset.to,suf=el.dataset.suffix||'';const start=performance.now();
+    (function t(now){const p=Math.min((now-start)/1400,1);const e2=1-Math.pow(1-p,3);
+      el.textContent=Math.round(to*e2)+suf;if(p<1)requestAnimationFrame(t)})(start);
+    cio.unobserve(el);
+  }}),{threshold:.6});
+  document.querySelectorAll('.cnt').forEach(el=>cio.observe(el));
+
+  // mouse-reactive blobs
+  const blobs=[document.getElementById('blob1'),document.getElementById('blob2'),document.getElementById('blob3')];
+  const depth=[30,-24,18];
+  addEventListener('mousemove',e=>{
+    const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);
+    blobs.forEach((b,i)=>b.style.transform=`translate(${x*depth[i]}px,${y*depth[i]}px)`);
+  },{passive:true});
+
+  // countdown — roll year forward so demo never freezes
+  let target=new Date('2026-08-14T18:00:00').getTime();
+  while(target-Date.now()<0) target+=365*24*60*60*1000;
+  const pad=n=>String(n).padStart(2,'0');
+  function tick(){
+    let d=target-Date.now(); if(d<0)d=0;
+    const days=Math.floor(d/864e5),h=Math.floor(d%864e5/36e5),m=Math.floor(d%36e5/6e4),s=Math.floor(d%6e4/1e3);
+    dd.textContent=pad(days);hh.textContent=pad(h);mm.textContent=pad(m);ss.textContent=pad(s);
+  }
+  tick();setInterval(tick,1000);
+
+  // LINEUP data — stage colors
+  const stageColor={'Main stage':'var(--pink)','Underground':'var(--cyan)','Sunrise dome':'var(--acid)'};
+  const lineup=[
+    {head:'AURORA VHS',acts:[
+      {n:'Neon Void',s:'Main stage',t:'23:30'},{n:'Sublimina',s:'Main stage',t:'22:00'},
+      {n:'K-OS',s:'Underground',t:'20:30'},{n:'Молот',s:'Sunrise dome',t:'19:00'},
+      {n:'Deep Signal',s:'Underground',t:'17:30'},
+    ]},
+    {head:'BLACK METEOR',acts:[
+      {n:'Hypnotica',s:'Main stage',t:'23:30'},{n:'Форма',s:'Main stage',t:'22:00'},
+      {n:'Vandal',s:'Underground',t:'20:30'},{n:'Echo Chamber',s:'Sunrise dome',t:'19:00'},
+      {n:'Sever',s:'Underground',t:'17:30'},
+    ]},
+    {head:'SECRET GUEST',acts:[
+      {n:'??? Секретный хедлайнер',s:'Main stage',t:'00:00'},{n:'Solaris',s:'Main stage',t:'22:00'},
+      {n:'Гравитация',s:'Underground',t:'20:30'},{n:'Nova Kid',s:'Sunrise dome',t:'19:00'},
+      {n:'Pulse Allstars',s:'Main stage',t:'17:30'},
+    ]},
+  ];
+  const body=document.getElementById('lineupBody');
+  function renderDay(i){
+    const d=lineup[i];
+    body.innerHTML=`<div class="fade">
+      <div class="headliner">${d.head}</div>
+      <div class="acts">${d.acts.map(a=>`
+        <div class="act"><span class="name"><i style="background:${stageColor[a.s]}"></i>${a.n}</span>
+          <span class="meta2"><span class="stage">${a.s}</span><span class="time">${a.t}</span></span>
+        </div>`).join('')}</div></div>`;
+  }
+  renderDay(0);
+  document.querySelectorAll('.day').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.day').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); renderDay(+b.dataset.day);
+  }));
+</script>
+</body>
+</html>
